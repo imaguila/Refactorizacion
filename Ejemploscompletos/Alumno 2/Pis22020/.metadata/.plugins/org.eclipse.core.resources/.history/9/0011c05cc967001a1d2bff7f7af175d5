@@ -1,0 +1,111 @@
+package org.pis2.serie;
+
+import java.io.*;
+import java.util.*;
+
+
+public class Lector {
+
+	private LinkedList<String> text;
+    private ListIterator<String> current;
+
+    private boolean inserting;
+
+    public Lector(){
+    	text = new LinkedList<String>();
+        current = text.listIterator();
+        inserting = false;
+    }
+
+
+    public void cargarArchivo(String file) {
+
+        Scanner fileScanner = null;
+        //PrintWriter printWriter = null;
+
+        try {
+			fileScanner = new Scanner(new File(file));
+			//printWriter = new PrintWriter(new FileWriter (file + ".out"));
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+      //  editText(fileScanner, printWriter);
+
+        fileScanner.close();
+       // printWriter.close();
+
+    }
+
+    private void analizarArchivo(Scanner fileScanner) {
+	    String line = "";
+        String result = "";
+        boolean inicio = false;
+        boolean incluir = false;
+
+        int n = 0;
+        ArrayList<Integer> numeros = new ArrayList<Integer>();
+        ArrayList<Integer> incrementos = new ArrayList<Integer>();
+
+        while (true) {
+            try {
+                line = fileScanner.nextLine();
+                String[] com = line.split(" ");
+
+                if(com.length == 0){//no hay nada, acaba
+                	break;
+                }
+
+                if(com.length == 1 & !inicio){//Empieza entrada
+                	inicio = true;
+                	incluir = false;
+                	n = Integer.parseInt(com[0]);
+                	numeros = new ArrayList<Integer>();
+                	incrementos = new ArrayList<Integer>();
+                }
+
+                if(com.length > 1 & com[0] == "0" & inicio){//numeros de entrada
+                	int bNumber = -1;
+                	for(String str: com){
+                		if(bNumber != -1){
+                			int incremento = Integer.parseInt(str) - bNumber;
+                			incrementos.add(incremento);
+                		}
+                		numeros.add(Integer.parseInt(str));
+                		bNumber = Integer.parseInt(str);
+                	}
+                	if(numeros.size() == n){
+                		incluir = true;
+                	}
+
+                }
+
+                if(com.length == 1 & inicio){//fin de entrada
+                	inicio = false;
+                }
+
+                if(!inicio & incluir){
+                	Entrada bla = new Entrada();
+                }
+
+             }
+             catch (RuntimeException e) {
+
+             }
+          }
+
+    }
+
+    private void analizarLinea(String linea){
+
+    }
+
+
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

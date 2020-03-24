@@ -1,0 +1,60 @@
+package org.pis2.serie;
+
+import java.util.*;
+
+public class Entrada {
+
+	/*
+	 * Variables
+	 */
+	private int N;
+	private ArrayList<Integer> numeros = new ArrayList<Integer>();
+	private ArrayList<Integer> incrementos;
+
+
+	/*
+	 * Constructor
+	 */
+	public Entrada(int n,ArrayList<Integer> numeros, ArrayList<Integer> incrementos ){
+		this.N = n;
+		this.numeros = numeros;
+		this.incrementos = incrementos;
+	}
+
+	/*Deprecated
+	 * public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	 *
+	 */
+
+
+	/*
+	 * Getters
+	 */
+	public int getN() {
+		return N;
+	}
+
+	public void setN(int n) {
+		N = n;
+	}
+
+	public ArrayList<Integer> getNumeros() {
+		return numeros;
+	}
+
+	public void setNumeros(ArrayList<Integer> numeros) {
+		this.numeros = numeros;
+	}
+
+	public ArrayList<Integer> getIncrementos() {
+		return incrementos;
+	}
+
+	public void setIncrementos(ArrayList<Integer> incrementos) {
+		this.incrementos = incrementos;
+	}
+
+}

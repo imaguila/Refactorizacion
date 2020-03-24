@@ -1,0 +1,150 @@
+package org.pis2.serie;
+
+import java.util.ArrayList;
+
+public class Salida {
+
+	private int N;
+	private ArrayList<Integer> numeros;
+	private ArrayList<Integer> incrementos;
+
+	Entrada entrada = null;
+	private ArrayList<Integer> ciclo;
+
+	public Salida(Entrada entrada1){
+		this.entrada = entrada1;
+
+		N = entrada.getN();
+		numeros = entrada.getNumeros();
+		incrementos = entrada.getIncrementos();
+		ciclo = new ArrayList<Integer>();
+	}
+
+	public ArrayList<Integer> calculaCiclo(){
+
+		boolean repeat = mismoIncremento(incrementos);
+
+		//Comprueba si el incremento es siempre el mismo
+		if(repeat){
+			ciclo.add(incrementos.get(0));
+			return ciclo;
+		}
+		//cual es el ciclo?
+		else{
+
+			//dos valores
+			ArrayList<Integer> c1 = new ArrayList<Integer>();
+			ArrayList<Integer> c2 = new ArrayList<Integer>();
+
+			int numCiclo = 2;
+			int finCiclo = 0;
+			boolean match = false;
+			boolean cicle = false;
+
+			//mientras no se conozca el ciclo
+			while(!cicle){
+				/*
+				 * Valores del principio a buscar coincidencia
+				 * más adelante en el array.
+				 */
+				for(int i = 0; i < numCiclo;i++){
+					c1.add(incrementos.get(i));
+				}
+
+				/*
+				 * Buscamos coincidencia
+				 */
+				for(int i = numCiclo;i<N-1;i++){//cada X sumados comprueba
+					int cont = 0;//contador de ayuda
+
+					// 1 2| 1 2| 1
+
+					for(int j = 0; j<numCiclo;j++){//Comprueba coincidencias
+						if(incrementos.get(i+cont) == c1.get(cont)){
+							match = true;
+						}else{
+							match = false;
+							break;
+						}
+						cont++;
+					}
+					/*
+					 * Si concuerdan: X Posibilidades
+					 * 1. - El ciclo es mayor de numCiclo(ejemplo 2)
+					 * 2. -
+					 *
+					 * Si no concuerdan: X Posibilidades
+					 * 1. - Ahí no empieza de nuevo el ciclo
+					 * 2. -
+					 */
+					if(match){
+						finCiclo = i;
+						for(int k = 0;k < finCiclo;k++){
+							ciclo.add(incrementos.get(k));
+							cicle = true;
+						}
+						break;
+					}
+				}
+			}
+			return ciclo;
+		}
+	}
+	// 1 1 2 |  1 1 2
+	public boolean mismoIncremento(ArrayList<Integer> incrementosMethod){
+		boolean repeat = false;
+		int helper = 0;
+		for(int i = 0;i < incrementos.size()-1;i++){
+			if(i > 0){
+				if(helper == incrementos.get(i))
+					repeat = true;
+				else
+					repeat = false;
+			}else{
+				helper = incrementos.get(0);
+			}
+		}
+		return repeat;
+	}
+
+	public int calculaSalida(){
+		int finNum = numeros.get(numeros.size()-1);
+		int finIncr = incrementos.get(incrementos.size()-1);
+		int befIncr = incrementos.get(incrementos.size()-2);
+		int nextIncr = 0;
+		int nextNum = 0;
+
+		boolean match = false;
+
+		int ci1 = ciclo.indexOf(finIncr);
+		int ci2 = ciclo.lastIndexOf(finIncr);
+
+		if(ci1 == ci2){
+			nextIncr = ciclo.get(ci2+1);
+			nextNum = finNum + nextIncr;
+		}
+		/*
+		 * Deprecated?
+		 * for(int i = 0;i < ciclo.size()-1;i++){
+			if(i==0){
+				if(ciclo.get(i) == finNum){
+
+				}
+			}else{
+
+			}
+			}
+
+		 */
+
+
+
+		return nextNum;
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

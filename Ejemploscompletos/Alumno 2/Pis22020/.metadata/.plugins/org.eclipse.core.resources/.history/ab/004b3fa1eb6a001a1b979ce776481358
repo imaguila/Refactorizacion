@@ -1,0 +1,47 @@
+package org.pis2.serie;
+
+import java.util.ArrayList;
+
+public class Salida {
+
+	private int N;
+	private ArrayList<Integer> numeros;
+	private ArrayList<Integer> incrementos;
+
+	Entrada entrada = null;
+	private ArrayList<Integer> ciclo;
+
+	public Salida(Entrada entrada1){
+		this.entrada = entrada1;
+
+		N = 0;
+		numeros = null;
+		incrementos = null;
+		ciclo = null;
+	}
+
+	public void calculaCiclo(){
+		N = entrada.getN();
+		numeros = entrada.getNumeros();
+		incrementos = entrada.getIncrementos();
+
+
+
+		//Comprueba si el incremento es de 1 siempre
+		if((N-1) == numeros.get(numeros.size()-1)){
+
+		}else{//cual es el ciclo?
+
+		}
+	}
+
+	public void calculaSalida(){
+
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

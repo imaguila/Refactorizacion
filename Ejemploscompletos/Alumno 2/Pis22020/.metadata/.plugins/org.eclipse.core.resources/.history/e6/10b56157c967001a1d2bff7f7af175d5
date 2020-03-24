@@ -1,0 +1,16 @@
+package org.pis2.serie;
+
+import java.util.*;
+
+public class Entrada {
+
+	private int N;
+	private ArrayList<String> numeros = new ArrayList<String>();
+	private ArrayList<String> incrementos;
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

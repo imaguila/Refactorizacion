@@ -1,0 +1,90 @@
+package org.pis2.serie;
+
+import java.io.*;
+import java.util.*;
+
+
+public class Lector {
+
+	private LinkedList<String> text;
+    private ListIterator<String> current;
+
+    private boolean inserting;
+
+    public Lector(){
+    	text = new LinkedList<String>();
+        current = text.listIterator();
+        inserting = false;
+    }
+
+
+    public void cargarArchivo(String file) {
+
+        Scanner fileScanner = null;
+        //PrintWriter printWriter = null;
+
+        try {
+			fileScanner = new Scanner(new File(file));
+			//printWriter = new PrintWriter(new FileWriter (file + ".out"));
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+      //  editText(fileScanner, printWriter);
+
+        fileScanner.close();
+       // printWriter.close();
+
+    }
+
+    private void analizarArchivo(Scanner fileScanner) {
+	    String line = "";
+        String result = "";
+        boolean inicio = false;
+        boolean numbers = false;
+
+        int n = 0;
+        ArrayList<Integer> numeros;
+        ArrayList<Integer> incrementos;
+
+        while (true) {
+            try {
+                line = fileScanner.nextLine();
+                String[] com = line.split(" ");
+
+                if(com.length == 1 & !inicio){//Empieza entrada
+                	inicio = true;
+                	n = Integer.parseInt(com[0]);
+                }
+
+                if(com.length > 1 & com[0] == "0"){//numeros de entrada
+                	for(String str: com){
+
+                	}
+                }
+
+                if(com.length == 1 & inicio){//fin de entrada
+                	inicio = false;
+                }
+
+             }
+             catch (RuntimeException e) {
+
+             }
+
+          }
+    }
+
+    private void analizarLinea(String linea){
+
+    }
+
+
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

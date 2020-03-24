@@ -1,0 +1,18 @@
+package org.pis2.serie;
+
+import java.util.ArrayList;
+
+public class Salida {
+
+	Entrada entrada = null;
+
+	public Salida(Entrada entrada1){
+		this.entrada = entrada1;
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

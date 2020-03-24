@@ -1,0 +1,22 @@
+package org.pis2.serie;
+
+import java.util.*;
+
+public class Entrada {
+
+	private int N;
+	private ArrayList<Integer> numeros = new ArrayList<Integer>();
+	private ArrayList<Integer> incrementos;
+
+	public Entrada(int n,ArrayList<Integer> numeros, ArrayList<Integer> incrementos ){
+		this.N = n;
+		this.numeros = numeros;
+		this.incrementos = incrementos;
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

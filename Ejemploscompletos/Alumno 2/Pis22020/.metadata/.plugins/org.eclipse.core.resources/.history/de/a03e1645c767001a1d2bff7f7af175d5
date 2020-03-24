@@ -1,0 +1,67 @@
+package org.pis2.serie;
+
+import java.io.*;
+import java.util.*;
+
+
+public class Lector {
+
+	private LinkedList<String> text;
+    private ListIterator<String> current;
+
+    private boolean inserting;
+
+    public Lector(){
+    	text = new LinkedList<String>();
+        current = text.listIterator();
+        inserting = false;
+    }
+
+
+    public void CargarArchivo(String file) {
+
+        Scanner fileScanner = null;
+        //PrintWriter printWriter = null;
+
+        try {
+			fileScanner = new Scanner(new File(file));
+			//printWriter = new PrintWriter(new FileWriter (file + ".out"));
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+      //  editText(fileScanner, printWriter);
+
+        fileScanner.close();
+       // printWriter.close();
+
+    }
+
+    private void AnalizarArchivo(Scanner fileScanner) {
+	    String line = "";
+        String result = "";
+
+        while (true) {
+            try {
+                line = fileScanner.nextLine();
+                String[] com = line.split(" ");
+
+
+
+             }
+             catch (RuntimeException e) {
+
+             }
+
+          }
+    }
+
+
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

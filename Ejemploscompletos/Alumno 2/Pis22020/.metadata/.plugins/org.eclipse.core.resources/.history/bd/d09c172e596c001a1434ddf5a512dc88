@@ -1,0 +1,10 @@
+package org.pis2.serie;
+
+public class PruebasSerie {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

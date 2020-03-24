@@ -1,0 +1,13 @@
+package org.pis2.serie;
+
+import java.util.ArrayList;
+
+public class Salida {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ArrayList<Entrada>
+
+	}
+
+}
