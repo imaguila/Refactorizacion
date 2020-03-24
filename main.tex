@@ -16,6 +16,10 @@
 
 \usepackage{verbatim} % para el codigo
 \usepackage{listings} % para codigo con formateado mas complejo
+\usepackage{codigo}
+
+\lstset{style = codigo}
+
 \usepackage{graphicx} 
 \graphicspath{{Figuras/}} % se fija el camino para las figuras
 
@@ -34,14 +38,42 @@
 Bloaters are code, methods and classes that have increased to such gargantuan proportions that they are hard to work with. Usually these smells do not crop up right away, rather they accumulate over time as the program evolves (and especially when nobody makes an effort to eradicate them).
 
 \subsection{Método largo -   Long Method}
-    Large Class
+\subsubsection{Signos y Sintomas - Signs and Symptoms}
+
+Un método que contiene demasiadas lineas de código, cualquier método que contenga mas de diez lineas, debería hacer que te preguntes si está bien.
+
+A method contains too many lines of code. Generally, any method longer than ten lines should make you start asking questions.
+
+\subsubsecReasons{Reasons for the Problem}
+
+Como el Hotel California, algo que esta siempre siendo añadido a un método pero nunca es usado. Es más fácil escribir el código que leerlo, este "olor" permanece impredecible hasta que el método se vuelve feo, desconmensurado. 
+
+Mentalmente, a veces es más difícil crear un nuevo método que añadir a uno existente: "Pero si son solo dos lineas, no hay motivo para crear un método entero solo para eso..." Lo que significa que otra linea es agregada y luego otra, dando nacimiento a un enredo de spaghetti code. 
+
+
+
+Like the Hotel California, something is always being added to a method but nothing is ever taken out. Since it is easier to write code than to read it, this “smell” remains unnoticed until the method turns into an ugly, oversized beast.
+
+Mentally, it is often harder to create a new method than to add to an existing one: “But it’s just two lines, there’s no use in creating a whole method just for that...” Which means that another line is added and then yet another, giving birth to a tangle of spaghetti code.
+
+\subsubsection{Treatment}
+Como una regla de oro, si sientes la necesidad de comentar algo dentro de un m
+
+As a rule of thumb, if you feel the need to comment on something inside a method, you should take this code and put it in a new method. Even a single line can and should be split off into a separate method, if it requires explanations. And if the method has a descriptive name, nobody will need to look at the code to see what it does.
+
+\subsection{Clase larga -   Large Class}
+
+    
+    \subsection{Obsesión primitiva -   Primitive Obsession}
+
+        \subsection{Una larga lista de parametros -   Long Parameter List}
+    \subsection{ -   Data Clumps}
+
     
     
-    Primitive Obsession
     
-    Long Parameter List
     
-    Data Clumps
+    
 
 
 
@@ -62,11 +94,12 @@ All these smells are incomplete or incorrect application of object-oriented prog
 
 
 
-\section{Change Preventers}
+\section{Preventores de cambio}
 
-These smells mean that if you need to change something in one place in your code, you have to make many changes in other places too. Program development becomes much more complicated and expensive as a result.
+Consiste en que si tienes que cambiar algo en un lugar del código, tienes que realizar también muchos cambios en otros lugares. El desarrollo se vuelve más complicado y costoso.
 
-    Divergent Change
+\subsection{Divergent Change}
+
     
 \subsection{    Shotgun Surgery}
 
@@ -100,8 +133,11 @@ Dead Code
 All the smells in this group contribute to excessive coupling between classes or show what happens if coupling is replaced by excessive delegation.
 
     Feature Envy
+    
     Inappropriate Intimacy
+    
     Message Chains
+    
     Middle Man
 
     Incomplete Library Class
@@ -150,19 +186,25 @@ The refactoring techniques in this group streamline methods, remove code duplica
     Substitute Algorithm
 
 
-\section{Moving Features between Objects}
+\section{Mover Características entre Objetos - Moving Features between Objects}
+Incluso si se ha distribuido la funcionalidad entre diferentes clases de manera imperfecta, todavía sigue habiendo esperanza.
+Estas técnicas de refactorización nos muestran como mover funcionalidad entre clases. crear nuevas clases y ocultar los detalles de implementación al acceso público de manera segura.
 
-Even if you have distributed functionality among different classes in a less-than-perfect way, there is still hope.
-
-These refactoring techniques show how to safely move functionality between classes, create new classes, and hide implementation details from public access.
 
     Move Method
+    
     Move Field
+    
     Extract Class
+    
     Inline Class
+    
     Hide Delegate
+    
     Remove Middle Man
+    
     Introduce Foreign Method
+    
     Introduce Local Extension
 
 
@@ -172,19 +214,33 @@ These refactoring techniques show how to safely move functionality between class
 These refactoring techniques help with data handling, replacing primitives with rich class functionality. Another important result is untangling of class associations, which makes classes more portable and reusable.
 
     Self Encapsulate Field
+    
     Replace Data Value with Object
+    
     Change Value to Reference
+    
     Change Reference to Value
+    
     Replace Array with Object
+    
     Duplicate Observed Data
+    
     Change Unidirectional Association to Bidirectional
+    
     Change Bidirectional Association to Unidirectional
+    
     Replace Magic Number with Symbolic Constant
+    
     Encapsulate Field
+    
     Encapsulate Collection
+    
     Replace Type Code with Class
+    
     Replace Type Code with Subclasses
+    
     Replace Type Code with State/Strategy
+    
     Replace Subclass with Fields
 
 
@@ -195,14 +251,21 @@ These refactoring techniques help with data handling, replacing primitives with 
 Conditionals tend to get more and more complicated in their logic over time, and there are yet more techniques to combat this as well.
 
     Decompose Conditional
+    
     Consolidate Conditional Expression
+    
     Consolidate Duplicate Conditional Fragments
+    
     Remove Control Flag
 
     Replace Nested Conditional with Guard Clauses
+    
     Replace Conditional with Polymorphism
+    
     Introduce Null Object
+    
     Introduce Assertion
+
 
 
 
@@ -218,22 +281,35 @@ These techniques make method calls simpler and easier to understand. This, in tu
     \item \textbf{Solución} Se renombra el método
 \end{itemize}
     
-%\lstinputlisting[firstline=1, firstnumber=1, nolol=true]{Listados\renamemethod.c}
+%\lstinputlisting[firstline=1, firstnumber=1, nolol=true]{extractmethod.java}
+\lstinputlisting[language = java]{extractmethod.java}
 
      
     
     Add Parameter
+    
     Remove Parameter
+    
     Separate Query from Modifier
+    
     Parameterize Method
+    
     Replace Parameter with Explicit Methods
+    
     Preserve Whole Object
+    
     Replace Parameter with Method Call
+    
     Introduce Parameter Object
+    
     Remove Setting Method
+    
     Hide Method
+    
     Replace Constructor with Factory Method
+    
     Replace Error Code with Exception
+    
     Replace Exception with Test
 
 
@@ -244,56 +320,111 @@ These techniques make method calls simpler and easier to understand. This, in tu
 Abstraction has its own group of refactoring techniques, primarily associated with moving functionality along the class inheritance hierarchy, creating new classes and interfaces, and replacing inheritance with delegation and vice versa.
 
     Pull Up Field
+    
     Pull Up Method
+    
     Pull Up Constructor Body
+    
     Push Down Method
+    
     Push Down Field
+    
     Extract Subclass
+    
     Extract Superclass
+    
     Extract Interface
+    
     Collapse Hierarchy
+    
     Form Template Method
+    
     Replace Inheritance with Delegation
+    
     Replace Delegation with Inheritance
+
 
 \section{Otras refactorizaciones de Fowler}
 % https://refactoring.com/catalog/
+\subsection{Grupo 1}
 Change Function Declaration
+
 Change Signature 
+
 Inline Function
+
 Inline Variable
+
 Introduce Explaining Variable
+
 Introduce Special Case
+
 Move Function
+
 Move Statements into Function
+
 Move Statements to Callers
+
+
+
+\subsection{Grupo 2}
 Parameterize Function
+
 Remove Dead Code
+
 Remove Flag Argument
+
 Remove Subclass
+
 Rename Field
+
 Rename Function 
+
 Rename Variable
+
 Replace Command with Function
+
+\subsection{Grupo 3}
 Replace Constructor with Factory Method
+
 Replace Control Flag with Break
+
 Replace Derived Variable with Query
+
 Replace Exception with Precheck
+
 Replace Function with Command
+
 Replace Inline Code with Function Call
+
+\subsection{Grupo 4}
 Replace Loop with Pipeline
+
 Replace Magic Literal
+
 Replace Parameter with Query
+
 Replace Primitive with Object
+
 Replace Query with Parameter
+
 Replace Record with Data Class
+
 Replace Subclass with Delegate
+
+\subsection{Grupo 5}
 Replace Superclass with Delegate
+
 Replace Type Code with Class
+
 Return Modified Value
+
 Slide Statements
+
 Split Loop
+
 Split Phase
+
 Split Variable
 
 
@@ -384,23 +515,27 @@ Split Variable
 % refactorizado por: 
 
 \chapter{Caso 2: Alejandro Francisco}
-% refactorizar por: Juan Soler
+\textbf{Refactorizador:} Juan Soler
+\textbf{Refactoriza:} Francisco José Martín
+
 
 \chapter {Caso 3: Francisco José Martín}
-
+% refactorizar por: Alejandro Francisco
 
 
 \chapter {Caso 4: Francisco Jesús García López}
+\textbf{Refactorizador:} Francisco José Martín
+\textbf{Refactoriza:} Adalid Abraham Villanueva Hermoza 
 
 
 
-\chapter {Caso 5}
+\chapter {Caso 5: Adalid Abraham Villanueva Hermoza}
 
 
-\chapter {Caso 6}
+\chapter {Caso 6: Marius Cosmin Magurean}
+% refactorizado por: Adalid Abraham Villanueva Hermoza
 
-
-\chapter {Caso 7}
+\chapter {Caso 7: Jose Antonio Parra Sánchez}
 
 
 
