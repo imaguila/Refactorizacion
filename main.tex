@@ -13,12 +13,14 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{amsmath}
+\usepackage{hyperref}
 
+\usepackage{pdfpages}
 \usepackage{verbatim} % para el codigo
 \usepackage{listings} % para codigo con formateado mas complejo
 \usepackage{codigo}
 
-\lstset{style = codigo}
+%\lstset{style = codigo}
 
 \usepackage{graphicx} 
 \graphicspath{{Figuras/}} % se fija el camino para las figuras
@@ -27,7 +29,7 @@
 
 \begin{document}
 
-\tableofcontents % indice de contenidos
+%\tableofcontents % indice de contenidos
  
 \chapter{Introducción}
 
@@ -36,38 +38,63 @@
 \section{Monstruos - Bloaters}
 
 Bloaters are code, methods and classes that have increased to such gargantuan proportions that they are hard to work with. Usually these smells do not crop up right away, rather they accumulate over time as the program evolves (and especially when nobody makes an effort to eradicate them).
-
+\label{metodolargo}
 \subsection{Método largo -   Long Method}
 \subsubsection{Signos y Sintomas - Signs and Symptoms}
 
 Un método que contiene demasiadas lineas de código, cualquier método que contenga mas de diez lineas, debería hacer que te preguntes si está bien.
 
-A method contains too many lines of code. Generally, any method longer than ten lines should make you start asking questions.
+\textit{A method contains too many lines of code. Generally, any method longer than ten lines should make you start asking questions.}
 
-\subsubsecReasons{Reasons for the Problem}
+\subsubsection{Razones para el problema - Reasons for the Problem}
 
-Como el Hotel California, algo que esta siempre siendo añadido a un método pero nunca es usado. Es más fácil escribir el código que leerlo, este "olor" permanece impredecible hasta que el método se vuelve feo, desconmensurado. 
+Como el Hotel California, algo que esta siempre siendo añadido a un método pero nunca es usado. Es más fácil escribir el código que leerlo, este ``olor" permanece impredecible hasta que el método se vuelve feo, desconmensurado. 
 
 Mentalmente, a veces es más difícil crear un nuevo método que añadir a uno existente: "Pero si son solo dos lineas, no hay motivo para crear un método entero solo para eso..." Lo que significa que otra linea es agregada y luego otra, dando nacimiento a un enredo de spaghetti code. 
 
 
 
-Like the Hotel California, something is always being added to a method but nothing is ever taken out. Since it is easier to write code than to read it, this “smell” remains unnoticed until the method turns into an ugly, oversized beast.
+\textit{Like the Hotel California, something is always being added to a method but nothing is ever taken out. Since it is easier to write code than to read it, this “smell” remains unnoticed until the method turns into an ugly, oversized beast.}
 
-Mentally, it is often harder to create a new method than to add to an existing one: “But it’s just two lines, there’s no use in creating a whole method just for that...” Which means that another line is added and then yet another, giving birth to a tangle of spaghetti code.
+\textit{Mentally, it is often harder to create a new method than to add to an existing one: “But it’s just two lines, there’s no use in creating a whole method just for that...” Which means that another line is added and then yet another, giving birth to a tangle of spaghetti code.}
 
-\subsubsection{Treatment}
-Como una regla de oro, si sientes la necesidad de comentar algo dentro de un m
+\subsubsection{Tratamiento - Treatment}
+Como una regla de oro, si sientes la necesidad de comentar algo dentro de un método, deberías mover este código a un nuevo método. Incluso una sola linea puede y debe ser dividida en un método separado, si esto requiere comentarios. Y si el método tiene un nombre descriptivo, nadie necesitará mirar código para ver que hace.
 
-As a rule of thumb, if you feel the need to comment on something inside a method, you should take this code and put it in a new method. Even a single line can and should be split off into a separate method, if it requires explanations. And if the method has a descriptive name, nobody will need to look at the code to see what it does.
+\textit{As a rule of thumb, if you feel the need to comment on something inside a method, you should take this code and put it in a new method. Even a single line can and should be split off into a separate method, if it requires explanations. And if the method has a descriptive name, nobody will need to look at the code to see what it does.}
+
+\subsubsection{Como se resuelve}
+  Para reducir la longitud de los métodos usar  \hyperref[sec:extractmethod]{prueba}
+  Si las variables locales y los parámetros interfieren con la extracción de un método, usar \ref{replacetempwithquery}
+  \ref{introduceparameterobject} o \ref{preservewholeobject}.
+  Si ninguna de las soluciones anteriores ayuda, intenta mover el método entero a un objeto separado usando \ref{replacemethodwithmethodobject}.
+  Operadores condicionales y bucles son buenas pistas de que el código puede moverse a un método separado. Para condicionales, usar \ref{descomposecondicional}. Si hay bucles en el camino intenta \ref{extractmethod} .
+
+
+
+
 
 \subsection{Clase larga -   Large Class}
+\subsubsection{Signos y Sintomas - Signs and Symptoms}
+
+Una clase contiene muchos campos/métodos/lineas de código.
+
+\textit{A class contains many fields/methods/lines of code.}
+
 
     
-    \subsection{Obsesión primitiva -   Primitive Obsession}
+\subsection{Obsesión primitiva -   Primitive Obsession}
+Clases normalmente empiezan siendo pequeñas. Pero conforme pasa el tiempo, ellas se vuelven grandes a medida que el programa crece.
 
-        \subsection{Una larga lista de parametros -   Long Parameter List}
-    \subsection{ -   Data Clumps}
+Como el caso de los métodos largos también, programadores normalmente lo encuentran mentalmente menos costoso que colocar una nueva característica en una clase existente en luagr de crear una clase nueva para la característica. 
+
+\textbf{Classes usually start small. But over time, they get bloated as the program grows.}
+
+\textit{As is the case with long methods as well, programmers usually find it mentally less taxing to place a new feature in an existing class than to create a new class for the feature.}
+
+\subsection{Una larga lista de parametros -   Long Parameter List}
+
+\subsection{ -   Data Clumps}
 
     
     
@@ -77,30 +104,62 @@ As a rule of thumb, if you feel the need to comment on something inside a method
 
 
 
-
-\section{Object-Orientation Abusers}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%-----ALEJANDRO----%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Object-Orientation Abusers} 
 
 All these smells are incomplete or incorrect application of object-oriented programming principles.
-
-    Switch Statements
+    \newline
     
-    Temporary Field
-
-    Refused Bequest
+    \textbf{Switch Statements} \newline
+    Traducido como \textit{cambio declarativo}, ocurre cuando tienes un operador \textit{switch} o secuencia de declaraciones \textit{if}.
+    \newline
     
-    Alternative Classes with Different Interfaces
+    \textbf{Temporary Field}  \newline
+    Traducido como \textit{campos temporales}, ocurre cuando los campos temporales obtienen su valores(necesitados por objetos) solo bajo ciertas circunstancias. Fuera de estas circunstancias, están vacías.
+    \newline
+    
+    \textbf{Refused Bequest}  \newline
+    Traducido como \textit{rechazo de herencia}, ocurre si una \textit{subclase} usa solo alguno de los métodos y propiedades heredados de sus padres, la jerarquía esta fuera de lugar. Los métodos no necesarios pueden simplemente acabar sin ser usados o ser redefinidos y lanzar excepciones.
+    \newline
+    
+    \textbf{Alternative Classes with Different Interfaces}  \newline
+    Traducido como \textit{clases alternativas con interfaces distintas}, ocurre cuando dos clases llevan a cabo funciones idénticas pero usan nombres de método distinto.
+    \newline
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%-----Francisco Jesús----%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Preventores de cambio}
 
 Consiste en que si tienes que cambiar algo en un lugar del código, tienes que realizar también muchos cambios en otros lugares. El desarrollo se vuelve más complicado y costoso.
 
-\subsection{Divergent Change}
+\subsection{Cambios divergentes}
 
+Cuando haces un cambio en una clase te encuentras con que tienes que cambiar muchos métodos que no están relacionados con el cambio. Por ejemplo, al añadir un nuevo tipo de producto tienes que cambiar los métodos de buscar, mostrar y pedir productos.
+\newline
+Suelen surgir por una estructura pobre o por la programación copiar-pegar.
+
+\textbf{Soluciones}
+\begin{itemize}
+    \item Dividir el comportamiento de la clase, con la refactorización de extraer clase \ref{extractclass}.
+    \item Si varias clases tienen el mismo comportamiento, se puede combinar mediante herencia (refactorizaciones de Extraer Superclase \ref{extractsuperclass} y Extraer Subclase \ref{extractsubclass}).
+\end{itemize}
+\newline
+\textbf{Ventajas}
+\begin{itemize}
+    \item Mejora la organización del código.
+    \item Reduce la duplicación del código.
+    \item Simplifica el soporte.
+\end{itemize}
     
+    
+Improves code organization.
+
+Reduces code duplication.
+
+Simplifies support.
+
 \subsection{    Shotgun Surgery}
 
 Se resuelve con las técnicas: renombrar método \ref{renombrarmetodo}
@@ -109,12 +168,15 @@ Se resuelve con las técnicas: renombrar método \ref{renombrarmetodo}
 
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Prescindibles - Dispensables}
 
-A dispensable is something pointless and unneeded whose absence would make the code cleaner, more efficient and easier to understand.
+%A dispensable is something pointless and unneeded whose absence would make the code cleaner, more efficient and easier to understand.%
 
-    Comments
+Un dispensable es aquello in
+
+
+    Comments - Comentarios
     
     Duplicate Code
     
@@ -162,20 +224,39 @@ Much of refactoring is devoted to correctly composing methods. In most cases, ex
 
 The refactoring techniques in this group streamline methods, remove code duplication, and pave the way for future improvements.
 
-    Extract Method
+\subsection{Extraer Método  - Extract Method}\label{sec:extractmethod}
+\begin{itemize}
+    \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
+    \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
+\end{itemize}
     
-    
-    Inline Method
+\subsection{Método en líbea - Inline Method}
+\label{inlinemethod}
+\begin{itemize}
+    \item \textbf{Problema} Cuando el cuerpo de un método es más obvio que el método en sí, use esta técnica.
+    \item \textbf{Solución} Reemplace las llamadas al método con el contenido del método y elimine el método en sí.
+\end{itemize}
 
+\subsection{Extraer variable - Extract Variable}
+\label{extracvariable}
+\begin{itemize}
+    \item \textbf{Problema} Tienes una expresión que es difícil de entender.
+    \item \textbf{Solución} Coloque el resultado de la expresión o sus partes en variables separadas que se explican por sí mismas.
+\end{itemize}
     
+\subsection{Temperatura en línea - Inline Temp}
+\label{inlinetemp}
+\begin{itemize}
+    \item \textbf{Problema} Tiene una variable temporal a la que se le asigna el resultado de una expresión simple y nada más.
+    \item \textbf{Solución} Reemplace las referencias a la variable con la expresión misma.
+\end{itemize}
     
-    Extract Variable
-    
-    
-    Inline Temp
-    
-    
-    Replace Temp with Query
+\subsection{Reemplazar temporales con consulta - Replace Temp with Query}
+\label{replacetempwithquery}
+\begin{itemize}
+    \item \textbf{Problema} Coloca el resultado de una expresión en una variable local para su uso posterior en su código.
+    \item \textbf{Solución} Mueva la expresión completa a un método separado y devuelva el resultado. Consulte el método en lugar de usar una variable. Incorpore el nuevo método en otros métodos, si es necesario.
+\end{itemize}
     
     Split Temporary Variable
     
@@ -187,20 +268,41 @@ The refactoring techniques in this group streamline methods, remove code duplica
 
 
 \section{Mover Características entre Objetos - Moving Features between Objects}
-Incluso si se ha distribuido la funcionalidad entre diferentes clases de manera imperfecta, todavía sigue habiendo esperanza.
+
+\label{renombrarmetodo} Incluso si se ha distribuido la funcionalidad entre diferentes clases de manera imperfecta, todavía sigue habiendo esperanza.
 Estas técnicas de refactorización nos muestran como mover funcionalidad entre clases. crear nuevas clases y ocultar los detalles de implementación al acceso público de manera segura.
 
 
-    Move Method
+\subsection{Mover Métodos - Move Method}  
+\begin{itemize}
+    \item \textbf{Problema} Un método es más utilizado en otra clase que en la suya propia.
+    \item \textbf{Solución} Crear un método en la clase donde el método se utiliza más, mover el código del método anterior al que hemos creado. Transformar el código del método original en una referencia al nuevo método de la otra clase o podemos eliminarlo por completo.
+\end{itemize}
     
-    Move Field
+\subsection{Mover Campos - Move Field}
+\begin{itemize}
+    \item \textbf{Problema} Un campo es más utilizado en otra clase que en la suya propia.
+    \item \textbf{Solución} Crear un campo en una nueva clase y redirigir a todos los usuarios del campo anterior a este.
+\end{itemize}
     
-    Extract Class
+\subsection{Extraer Clases - Extract Class}
+\begin{itemize}
+    \item \textbf{Problema} Una clase hace el trabajo que deberían hacer dos.
+    \item \textbf{Solución} Crear una nueva clase para la segunda funcionalidad y colocar los campos y métodos correspondientes en esta.
+\end{itemize}
     
-    Inline Class
+\subsection{Clases Entrelíneas - Inline Class}
+\begin{itemize}
+    \item \textbf{Problema} Un método apenas tiene funcionalidad no es responsable de nada y no se plantea agregarle nada nuevo.
+    \item \textbf{Solución} Mover todas las características a otra clase.
+\end{itemize}
     
-    Hide Delegate
-    
+\subsection{Esconder Delegado - Hide Delegate}
+ \begin{itemize}
+    \item \textbf{Problema} Un método apenas tiene funcionalidad no es resposable de nada y no se plantea agregarle nada nuevo.
+    \item \textbf{Solución} Mover todas las características a otra clase.
+\end{itemize}
+
     Remove Middle Man
     
     Introduce Foreign Method
@@ -365,24 +467,61 @@ Move Statements into Function
 
 Move Statements to Callers
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%-Alejandro-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Grupo 2}
-Parameterize Function
+\textbf{Parameterize Function}
 
-Remove Dead Code
+\begin{itemize}
+    \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
+    \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
+\end{itemize}
 
-Remove Flag Argument
 
-Remove Subclass
+\textbf{Remove Flag Argument}
 
-Rename Field
+\begin{itemize}
+    \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
+    \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
+\end{itemize}
 
-Rename Function 
 
-Rename Variable
+\textbf{Remove Subclass}
 
-Replace Command with Function
+\begin{itemize}
+    \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
+    \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
+\end{itemize}
+
+\textbf{Rename Field}
+
+\begin{itemize}
+    \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
+    \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
+\end{itemize}
+
+\textbf{Rename Function}
+
+\begin{itemize}
+    \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
+    \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
+\end{itemize}
+
+\textbf{Rename Variable}
+
+\begin{itemize}
+    \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
+    \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
+\end{itemize}
+
+\textbf{Replace Command with Function}
+
+\begin{itemize}
+    \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
+    \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Grupo 3}
 Replace Constructor with Factory Method
