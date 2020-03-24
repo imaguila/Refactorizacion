@@ -1,0 +1,113 @@
+package org.pis2.serie;
+
+import java.util.ArrayList;
+
+public class Salida {
+
+	private int N;
+	private ArrayList<Integer> numeros;
+	private ArrayList<Integer> incrementos;
+
+	Entrada entrada = null;
+	private ArrayList<Integer> ciclo;
+
+	public Salida(Entrada entrada1){
+		this.entrada = entrada1;
+
+		N = entrada.getN();
+		numeros = entrada.getNumeros();
+		incrementos = entrada.getIncrementos();
+		ciclo = new ArrayList<Integer>();
+	}
+
+	public ArrayList<Integer> calculaCiclo(){
+
+		boolean repeat = mismoIncremento(incrementos);
+
+		//Comprueba si el incremento es siempre el mismo
+		if(repeat){
+			ciclo.add(incrementos.get(0));
+			return ciclo;
+		}
+		//cual es el ciclo?
+		else{
+
+			//dos valores
+			ArrayList<Integer> c1 = new ArrayList<Integer>();
+			ArrayList<Integer> c2 = new ArrayList<Integer>();
+
+			int numCiclo = 2;
+			boolean match = false;
+			boolean cicle = false;
+
+			//mientras no se conozca el ciclo
+			while(!cicle){
+				/*
+				 * Valores del principio a buscar coincidencia
+				 * más adelante en el array.
+				 */
+				for(int i = 0; i < numCiclo;i++){
+					c1.add(incrementos.get(i));
+				}
+
+				/*
+				 * Buscamos coincidencia
+				 */
+				for(int i = numCiclo;i<N-1;i+=numCiclo){//cada X sumados comprueba
+					int cont = 0;//contador de ayuda
+
+					for(int j= 0; j<numCiclo;j++){//Comprueba coincidencias
+						if(numeros.get(i+cont) == c1.get(cont)){
+							match = true;
+						}else{
+							match = false;
+							break;
+						}
+						cont++;
+					}
+					/*
+					 * Si concuerdan: X Posibilidades
+					 * 1. - El ciclo es mayor de numCiclo(ejemplo 2)
+					 * 2. -
+					 *
+					 * Si no concuerdan: X Posibilidades
+					 * 1. - Ahí no empieza de nuevo el ciclo
+					 * 2. -
+					 */
+					if(match){
+
+					}
+				}
+
+
+			}
+			return ciclo;
+		}
+	}
+	// 1 1 2 |  1 1 2
+	public boolean mismoIncremento(ArrayList<Integer> incrementosMethod){
+		boolean repeat = false;
+		int helper = 0;
+		for(int i = 0;i < incrementos.size()-1;i++){
+			if(i > 0){
+				if(helper == incrementos.get(i))
+					repeat = true;
+				else
+					repeat = false;
+			}else{
+				helper = incrementos.get(0);
+			}
+		}
+		return repeat;
+	}
+
+	public void calculaSalida(){
+
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

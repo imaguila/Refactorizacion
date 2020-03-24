@@ -1,0 +1,80 @@
+package org.pis2.serie;
+
+import java.util.ArrayList;
+
+public class Salida {
+
+	private int N;
+	private ArrayList<Integer> numeros;
+	private ArrayList<Integer> incrementos;
+
+	Entrada entrada = null;
+	private ArrayList<Integer> ciclo;
+
+	public Salida(Entrada entrada1){
+		this.entrada = entrada1;
+
+		N = entrada.getN();
+		numeros = entrada.getNumeros();
+		incrementos = entrada.getIncrementos();
+		ciclo = new ArrayList<Integer>();
+	}
+
+	public ArrayList<Integer> calculaCiclo(){
+
+		boolean repeat = mismoIncremento(incrementos);
+
+		//Comprueba si el incremento es siempre el mismo
+		if(repeat){
+			ciclo.add(incrementos.get(0));
+			return ciclo;
+		}
+		//cual es el ciclo?
+		else{
+
+			//dos valores
+			ArrayList<Integer> comprobador = new ArrayList<Integer>();
+			comprobador.add(incrementos.get(0));
+			comprobador.add(incrementos.get(1));
+
+			boolean match = false;
+			boolean cicle = false;
+
+			//mientras no se conozca el ciclo
+			while(!cicle){
+				for(int i = 2; i < N-1;i+=2){
+					if(numeros.get(i) == comprobador.get(0) & numeros.get(++i) == comprobador.get(1)){
+						cicle = true;
+					}
+				}
+			}
+			return ciclo;
+		}
+	}
+	// 1 1 2 |  1 1 2
+	public boolean mismoIncremento(ArrayList<Integer> incrementosMethod){
+		boolean repeat = false;
+		int helper = 0;
+		for(int i = 0;i < incrementos.size()-1;i++){
+			if(i > 0){
+				if(helper == incrementos.get(i))
+					repeat = true;
+				else
+					repeat = false;
+			}else{
+				helper = incrementos.get(0);
+			}
+		}
+		return repeat;
+	}
+
+	public void calculaSalida(){
+
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

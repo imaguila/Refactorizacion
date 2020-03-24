@@ -1,0 +1,36 @@
+package org.pis2.serie;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class PruebasSerie {
+	String directorioEntrada = "";
+
+	@Before
+	public void setUp() throws Exception {
+		directorioEntrada = System.getProperty("user.dir") + File.separator +
+			    "src" + File.separator +
+			    "org" + File.separator +
+			    "pis2" + File.separator +
+			    "serie" + File.separator;
+	}
+
+
+
+
+
+
+
+
+
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
