@@ -1,0 +1,351 @@
+%
+% Body text font is Palatino!
+%
+
+\documentclass[11pt,a4paper,oneside]{book}
+
+
+\usepackage[spanish]{babel}
+%---------------------------------------------------------------------------
+% Esto es para poder escribir acentos directamente:
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%---------------------------------------------------------------------------
+% para uso en modo matamático
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+
+\usepackage{verbatim} % para el codigo
+\usepackage{listings} % para codigo con formateado mas complejo
+\usepackage{graphicx} 
+\graphicspath{{Figuras/}} % se fija el camino para las figuras
+
+\usepackage{longtable} % Tablas largas
+
+\begin{document}
+
+\tableofcontents % indice de contenidos
+ 
+\chapter{Introducción}
+
+
+
+
+\chapter{Code Smells}
+
+\section{Monstruos - Bloaters}
+
+Bloaters are code, methods and classes that have increased to such gargantuan proportions that they are hard to work with. Usually these smells do not crop up right away, rather they accumulate over time as the program evolves (and especially when nobody makes an effort to eradicate them).
+
+\subsection{Método largo -   Long Method}
+    Large Class
+    Primitive Obsession
+    Long Parameter List
+    Data Clumps
+
+
+
+
+\section{Object-Orientation Abusers}
+
+All these smells are incomplete or incorrect application of object-oriented programming principles.
+
+    Switch Statements
+    Temporary Field
+
+    Refused Bequest
+    Alternative Classes with Different Interfaces
+
+
+
+
+
+\section{Change Preventers}
+
+These smells mean that if you need to change something in one place in your code, you have to make many changes in other places too. Program development becomes much more complicated and expensive as a result.
+
+    Divergent Change
+    Shotgun Surgery
+
+    Parallel Inheritance Hierarchies
+
+
+
+
+\section{Prescindibles - Dispensables}
+
+A dispensable is something pointless and unneeded whose absence would make the code cleaner, more efficient and easier to understand.
+
+    Comments
+    Duplicate Code
+    Lazy Class
+
+    Data Class
+    Dead Code
+    Speculative Generality
+
+
+
+\section{Couplers}
+
+All the smells in this group contribute to excessive coupling between classes or show what happens if coupling is replaced by excessive delegation.
+
+    Feature Envy
+    Inappropriate Intimacy
+    Message Chains
+    Middle Man
+
+    Incomplete Library Class
+
+
+\section{Other Smells}
+
+Below are the smells which do not fall into any broad category.
+
+Incomplete Library Class
+
+Sooner or later, libraries stop meeting user needs. The only solution to the problem – changing the library – is often impossible since the library is read-only.
+
+
+
+\chapter{Técnicas de refactorización}
+
+
+\section{Composing methods}
+
+Much of refactoring is devoted to correctly composing methods. In most cases, excessively long methods are the root of all evil. The vagaries of code inside these methods conceal the execution logic and make the method extremely hard to understand – and even harder to change.
+
+The refactoring techniques in this group streamline methods, remove code duplication, and pave the way for future improvements.
+
+    Extract Method
+    Inline Method
+    Extract Variable
+    Inline Temp
+    Replace Temp with Query
+    Split Temporary Variable
+    Remove Assignments to Parameters
+    Replace Method with Method Object
+    Substitute Algorithm
+
+
+\section{Moving Features between Objects}
+
+Even if you have distributed functionality among different classes in a less-than-perfect way, there is still hope.
+
+These refactoring techniques show how to safely move functionality between classes, create new classes, and hide implementation details from public access.
+
+    Move Method
+    Move Field
+    Extract Class
+    Inline Class
+    Hide Delegate
+    Remove Middle Man
+    Introduce Foreign Method
+    Introduce Local Extension
+
+
+
+\section{Organizing Data}
+
+These refactoring techniques help with data handling, replacing primitives with rich class functionality. Another important result is untangling of class associations, which makes classes more portable and reusable.
+
+    Self Encapsulate Field
+    Replace Data Value with Object
+    Change Value to Reference
+    Change Reference to Value
+    Replace Array with Object
+    Duplicate Observed Data
+    Change Unidirectional Association to Bidirectional
+    Change Bidirectional Association to Unidirectional
+    Replace Magic Number with Symbolic Constant
+    Encapsulate Field
+    Encapsulate Collection
+    Replace Type Code with Class
+    Replace Type Code with Subclasses
+    Replace Type Code with State/Strategy
+    Replace Subclass with Fields
+
+
+
+
+\section{Simplifying Conditional Expressions}
+
+Conditionals tend to get more and more complicated in their logic over time, and there are yet more techniques to combat this as well.
+
+    Decompose Conditional
+    Consolidate Conditional Expression
+    Consolidate Duplicate Conditional Fragments
+    Remove Control Flag
+
+    Replace Nested Conditional with Guard Clauses
+    Replace Conditional with Polymorphism
+    Introduce Null Object
+    Introduce Assertion
+
+
+
+
+\section{Simplifying Method Calls}
+
+These techniques make method calls simpler and easier to understand. This, in turn, simplifies the interfaces for interaction between classes.
+
+    Rename Method
+    Add Parameter
+    Remove Parameter
+    Separate Query from Modifier
+    Parameterize Method
+    Replace Parameter with Explicit Methods
+    Preserve Whole Object
+    Replace Parameter with Method Call
+    Introduce Parameter Object
+    Remove Setting Method
+    Hide Method
+    Replace Constructor with Factory Method
+    Replace Error Code with Exception
+    Replace Exception with Test
+
+
+
+
+\section{Dealing with Generalisation}
+
+Abstraction has its own group of refactoring techniques, primarily associated with moving functionality along the class inheritance hierarchy, creating new classes and interfaces, and replacing inheritance with delegation and vice versa.
+
+    Pull Up Field
+    Pull Up Method
+    Pull Up Constructor Body
+    Push Down Method
+    Push Down Field
+    Extract Subclass
+    Extract Superclass
+    Extract Interface
+    Collapse Hierarchy
+    Form Template Method
+    Replace Inheritance with Delegation
+    Replace Delegation with Inheritance
+
+\section{Otras refactorizaciones de Fowler}
+% https://refactoring.com/catalog/
+Change Function Declaration
+Change Signature 
+Inline Function
+Inline Variable
+Introduce Explaining Variable
+Introduce Special Case
+Move Function
+Move Statements into Function
+Move Statements to Callers
+Parameterize Function
+Remove Dead Code
+Remove Flag Argument
+Remove Subclass
+Rename Field
+Rename Function 
+Rename Variable
+Replace Command with Function
+Replace Constructor with Factory Method
+Replace Control Flag with Break
+Replace Derived Variable with Query
+Replace Exception with Precheck
+Replace Function with Command
+Replace Inline Code with Function Call
+Replace Loop with Pipeline
+Replace Magic Literal
+Replace Parameter with Query
+Replace Primitive with Object
+Replace Query with Parameter
+Replace Record with Data Class
+Replace Subclass with Delegate
+Replace Superclass with Delegate
+Replace Type Code with Class
+Return Modified Value
+Slide Statements
+Split Loop
+Split Phase
+Split Variable
+
+
+
+\chapter*{Correspondencia entre refactorizaciones}
+
+\begin{longtable}{|p{200pt}|p{200pt}|}
+\footnotesize
+Categoría refactorización & Categoría Fowler\\ 
+\hline
+    Add Parameter & Add Parameter\\ 
+    Change Bidirectional Association to Unidirectional & \\ 
+    Change Reference to Value & Change Reference to Value\\ 
+    Change Unidirectional Association to Bidirectional & \\ 
+    Change Value to Reference & Change Value to Reference\\ 
+    Collapse Hierarchy & Collapse Hierarchy\\ 
+ & Combine Functions into Class\\ 
+ & Combine Functions into Transform\\ 
+    Consolidate Conditional Expression & Consolidate Conditional Expression\\ 
+    Consolidate Duplicate Conditional Fragments & Consolidate Duplicate Conditional Fragments\\ 
+    Decompose Conditional & Decompose Conditional\\ 
+    Duplicate Observed Data & \\ 
+    Encapsulate Collection & Encapsulate Collection\\ 
+    Encapsulate Field & Encapsulate Field \\ 
+ & Encapsulate Record\\ 
+ & Encapsulate Variable\\ 
+    Extract Class & Extract Class\\ 
+    Extract Interface & Extract Function\\ 
+    Extract Method & Extract Method\\ 
+    Extract Subclass & Extract Subclass \\ 
+    Extract Superclass & Extract Superclass\\ 
+    Extract Variable & Extract Variable\\ 
+    Form Template Method & \\ 
+    Hide Delegate & Hide Delegate\\ 
+    Hide Method & \\ 
+    Inline Class & Inline Class\\ 
+    Inline Method & Inline Method\\ 
+    Inline Temp & Inline Temp\\ 
+    Introduce Assertion & Introduce Assertion\\ 
+    Introduce Foreign Method & \\ 
+    Introduce Local Extension & \\ 
+    Introduce Null Object & Introduce Null Object\\ 
+    Introduce Parameter Object & Introduce Parameter Object\\ 
+    Move Field & Move Field\\ 
+    Move Method & Move Method\\ 
+    Parameterize Method & Parameterize Method\\ 
+    Preserve Whole Object & Preserve Whole Object\\ 
+    Pull Up Constructor Body & Pull Up Constructor Body\\ 
+    Pull Up Field & Pull Up Field\\ 
+    Pull Up Method & Pull Up Method\\ 
+    Push Down Field & Push Down Field\\ 
+    Push Down Method & Push Down Method\\ 
+    Remove Assignments to Parameters & Remove Assignments to Parameters \\ 
+    Remove Control Flag & Remove Control Flag\\ 
+    Remove Middle Man & Remove Middle Man\\ 
+    Remove Parameter & Remove Parameter \\ 
+    Remove Setting Method & Remove Setting Method\\ 
+    Rename Method & Rename Method\\ 
+    Replace Array with Object & \\ 
+    Replace Conditional with Polymorphism & Replace Conditional with Polymorphism\\ 
+    Replace Constructor with Factory Method & Replace Constructor with Factory Function\\ 
+    Replace Data Value with Object & Replace Data Value with Object\\ 
+    Replace Delegation with Inheritance & \\ 
+    Replace Error Code with Exception & Replace Error Code with Exception\\ 
+    Replace Exception with Test & Replace Exception with Test\\ 
+    Replace Inheritance with Delegation & Replace Inheritance with Delegation\\ 
+    Replace Magic Number with Symbolic Constant & Replace Magic Number with Symbolic Constant\\ 
+    Replace Method with Method Object & Replace Method with Method Object\\ 
+    Replace Nested Conditional with Guard Clauses & Replace Nested Conditional with Guard Clauses\\ 
+    Replace Parameter with Explicit Methods & Replace Parameter with Explicit Methods\\ 
+    Replace Parameter with Method Call & Replace Parameter with Method\\ 
+    Replace Subclass with Fields & Replace Subclass with Fields\\ 
+    Replace Temp with Query & Replace Temp with Query\\ 
+    Replace Type Code with Class & \\ 
+    Replace Type Code with State/Strategy & Replace Type Code with State/Strategy\\ 
+    Replace Type Code with Subclasses & Replace Type Code with Subclasses\\ 
+    Self Encapsulate Field & Self-Encapsulate Field\\ 
+    Separate Query from Modifier & Separate Query from Modifier\\ 
+    Split Temporary Variable & Split Temp\\ 
+    Substitute Algorithm &     Substitute Algorithm\\
+\end{longtable}
+
+
+
+
+\end{document}
