@@ -64,11 +64,11 @@ Como una regla de oro, si sientes la necesidad de comentar algo dentro de un mé
 \textit{As a rule of thumb, if you feel the need to comment on something inside a method, you should take this code and put it in a new method. Even a single line can and should be split off into a separate method, if it requires explanations. And if the method has a descriptive name, nobody will need to look at the code to see what it does.}
 
 \subsubsection{Como se resuelve}
-  Para reducir la longitud de los métodos usar  \hyperref[sec:extractmethod]{prueba}
-  Si las variables locales y los parámetros interfieren con la extracción de un método, usar \ref{replacetempwithquery}
-  \ref{introduceparameterobject} o \ref{preservewholeobject}.
-  Si ninguna de las soluciones anteriores ayuda, intenta mover el método entero a un objeto separado usando \ref{replacemethodwithmethodobject}.
-  Operadores condicionales y bucles son buenas pistas de que el código puede moverse a un método separado. Para condicionales, usar \ref{descomposecondicional}. Si hay bucles en el camino intenta \ref{extractmethod} .
+  Para reducir la longitud de los métodos usar  \hyperref[extractmethod]{Extract Method}
+  Si las variables locales y los parámetros interfieren con la extracción de un método, usar \hyperref[replacetempwithquery]{Replace Temp With Query}
+  \hyperref[introduceparameterobject]{Introduce Parameter Object} o \hyperref[preservewholeobject]{PreserveWholeObject}.
+  Si ninguna de las soluciones anteriores ayuda, intenta mover el método entero a un objeto separado usando \hyperref[replacemethodwithmethodobject]{Replace Method With Method Object}.
+  Operadores condicionales y bucles son buenas pistas de que el código puede moverse a un método separado. Para condicionales, usar \hyperref{descomposecondicional}. Si hay bucles en el camino intenta \hyperref[extractmethod]{Extract Method} .
 
 
 
@@ -83,14 +83,22 @@ Una clase contiene muchos campos/métodos/lineas de código.
 
 
     
-\subsection{Obsesión primitiva -   Primitive Obsession}
+\subsubsection{Razones para el problema - Reasons for the Problem}
+
 Clases normalmente empiezan siendo pequeñas. Pero conforme pasa el tiempo, ellas se vuelven grandes a medida que el programa crece.
 
-Como el caso de los métodos largos también, programadores normalmente lo encuentran mentalmente menos costoso que colocar una nueva característica en una clase existente en luagr de crear una clase nueva para la característica. 
+Como el caso de los métodos largos también, programadores normalmente lo encuentran mentalmente menos costoso que colocar una nueva característica en una clase existente en lugar de crear una clase nueva para la característica. 
 
-\textbf{Classes usually start small. But over time, they get bloated as the program grows.}
+\subsubsection{Tratamiento - Treatment}
+
+
+
+
+\textit{Classes usually start small. But over time, they get bloated as the program grows.}
 
 \textit{As is the case with long methods as well, programmers usually find it mentally less taxing to place a new feature in an existing class than to create a new class for the feature.}
+
+
 
 \subsection{Una larga lista de parametros -   Long Parameter List}
 
@@ -106,7 +114,7 @@ Como el caso de los métodos largos también, programadores normalmente lo encue
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%-----ALEJANDRO----%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Object-Orientation Abusers} 
-
+\label{Object-OrientationAbusers}
 All these smells are incomplete or incorrect application of object-oriented programming principles.
     \newline
     
@@ -135,7 +143,7 @@ All these smells are incomplete or incorrect application of object-oriented prog
 Consiste en que si tienes que cambiar algo en un lugar del código, tienes que realizar también muchos cambios en otros lugares. El desarrollo se vuelve más complicado y costoso.
 
 \subsection{Cambios divergentes}
-
+\label{cambiosdivergentes}
 Cuando haces un cambio en una clase te encuentras con que tienes que cambiar muchos métodos que no están relacionados con el cambio. Por ejemplo, al añadir un nuevo tipo de producto tienes que cambiar los métodos de buscar, mostrar y pedir productos.
 \newline
 Suelen surgir por una estructura pobre o por la programación copiar-pegar.
@@ -143,28 +151,30 @@ Suelen surgir por una estructura pobre o por la programación copiar-pegar.
 \textbf{Soluciones}
 \begin{itemize}
     \item Dividir el comportamiento de la clase, con la refactorización de extraer clase \ref{extractclass}.
-    \item Si varias clases tienen el mismo comportamiento, se puede combinar mediante herencia (refactorizaciones de Extraer Superclase \ref{extractsuperclass} y Extraer Subclase \ref{extractsubclass}).
+    \item Si varias clases tienen el mismo comportamiento, se puede combinar mediante herencia (refactorizaciones de Extraer Superclase \hyperef{extractsuperclass} y Extraer Subclase \ref{extractsubclass}).
 \end{itemize}
+
 \newline
+
 \textbf{Ventajas}
 \begin{itemize}
     \item Mejora la organización del código.
     \item Reduce la duplicación del código.
     \item Simplifica el soporte.
 \end{itemize}
-    
-    
-Improves code organization.
 
-Reduces code duplication.
+\subsection{Cirugía de escopeta}
+Hacer algun cambio requiere hacer muchos cambios en muchas clases diferentes.
+\newline
+Suele surgir cuando una funcionalidad se ha repartido entre varias clases. Puede ocurrir después de aplicar la solución para los Cambios divergentes \hyperef{cambiosdivergentes}.
+\textbf{Soluciones}
+\begin{itemize}
+    \item Dividir el comportamiento de la clase, con la refactorización de extraer clase \ref{extractclass}.
+    \item Si varias clases tienen el mismo comportamiento, se puede combinar mediante herencia (refactorizaciones de Extraer Superclase \hyperef{extractsuperclass} y Extraer Subclase \ref{extractsubclass}).
+\end{itemize}
 
-Simplifies support.
 
-\subsection{    Shotgun Surgery}
-
-Se resuelve con las técnicas: renombrar método \ref{renombrarmetodo}
-
-    Parallel Inheritance Hierarchies
+\subsection{Jerarquías de herencias paralelas}
 
 
 
@@ -224,11 +234,14 @@ Much of refactoring is devoted to correctly composing methods. In most cases, ex
 
 The refactoring techniques in this group streamline methods, remove code duplication, and pave the way for future improvements.
 
-\subsection{Extraer Método  - Extract Method}\label{sec:extractmethod}
+\subsection{Extraer Método  - Extract Method}
+\label{extractmethod}
 \begin{itemize}
     \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
     \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
 \end{itemize}
+\lstinputlisting[language = java]{extractmethodproblem.java}
+\lstinputlisting[language = java]{extractmethodsolution.java}
     
 \subsection{Método en líbea - Inline Method}
 \label{inlinemethod}
@@ -236,6 +249,8 @@ The refactoring techniques in this group streamline methods, remove code duplica
     \item \textbf{Problema} Cuando el cuerpo de un método es más obvio que el método en sí, use esta técnica.
     \item \textbf{Solución} Reemplace las llamadas al método con el contenido del método y elimine el método en sí.
 \end{itemize}
+\lstinputlisting[language = java]{inlinemethodproblem.java}
+\lstinputlisting[language = java]{inlinemethodsolution.java}
 
 \subsection{Extraer variable - Extract Variable}
 \label{extracvariable}
@@ -243,6 +258,8 @@ The refactoring techniques in this group streamline methods, remove code duplica
     \item \textbf{Problema} Tienes una expresión que es difícil de entender.
     \item \textbf{Solución} Coloque el resultado de la expresión o sus partes en variables separadas que se explican por sí mismas.
 \end{itemize}
+\lstinputlisting[language = java]{extracvariableproblem.java}
+\lstinputlisting[language = java]{extracvariablesolution.java}
     
 \subsection{Temperatura en línea - Inline Temp}
 \label{inlinetemp}
@@ -291,7 +308,7 @@ Estas técnicas de refactorización nos muestran como mover funcionalidad entre 
     \item \textbf{Solución} Crear una nueva clase para la segunda funcionalidad y colocar los campos y métodos correspondientes en esta.
 \end{itemize}
     
-\subsection{Clases Entrelíneas - Inline Class}
+\subsection{Clase en Línea - Inline Class}
 \begin{itemize}
     \item \textbf{Problema} Un método apenas tiene funcionalidad no es responsable de nada y no se plantea agregarle nada nuevo.
     \item \textbf{Solución} Mover todas las características a otra clase.
@@ -299,8 +316,8 @@ Estas técnicas de refactorización nos muestran como mover funcionalidad entre 
     
 \subsection{Esconder Delegado - Hide Delegate}
  \begin{itemize}
-    \item \textbf{Problema} Un método apenas tiene funcionalidad no es resposable de nada y no se plantea agregarle nada nuevo.
-    \item \textbf{Solución} Mover todas las características a otra clase.
+    \item \textbf{Problema} Una clase X obtiene el objeto B de un campo o método del objeto А. Entonces el cliente llama a un método del objeto B.
+    \item \textbf{Solución} Crear un nuevo método en la clase A que realize una llamada al objeto B. En este caso, la clase X no conoce ni depende de la clase B.
 \end{itemize}
 
     Remove Middle Man
@@ -376,7 +393,7 @@ Conditionals tend to get more and more complicated in their logic over time, and
 
 These techniques make method calls simpler and easier to understand. This, in turn, simplifies the interfaces for interaction between classes.
 
-\subsection{     Renombrar método - Rename Method}
+\subsection{Renombrar método - Rename Method}
 \label{renombrarmetodo}
 \begin{itemize}
     \item \textbf{Problema} Aparece cuando un método no explica lo que hace 
@@ -471,15 +488,19 @@ Move Statements to Callers
 
 \subsection{Grupo 2}
 \textbf{Parameterize Function}
-
+\label{ParameterizeFunction}
 \begin{itemize}
-    \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
-    \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
+    \item \textbf{Problema} ???
+    \lstinputlisting[language = java]{parameterizeFunctionProblem.java}
+    
+    \item \textbf{Solución} ??
+      \lstinputlisting[language = java]{parameterizeFunctionSolution.java}
+    
 \end{itemize}
 
 
 \textbf{Remove Flag Argument}
-
+\label{RemoveFlagArgument}
 \begin{itemize}
     \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
     \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
@@ -487,35 +508,35 @@ Move Statements to Callers
 
 
 \textbf{Remove Subclass}
-
+\label{RemobeSubclass}
 \begin{itemize}
     \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
     \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
 \end{itemize}
 
 \textbf{Rename Field}
-
+\label{RenameField}
 \begin{itemize}
     \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
     \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
 \end{itemize}
 
 \textbf{Rename Function}
-
+\label{RenameFunction}
 \begin{itemize}
     \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
     \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
 \end{itemize}
 
 \textbf{Rename Variable}
-
+\label{RenameVariable}
 \begin{itemize}
     \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
     \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
 \end{itemize}
 
 \textbf{Replace Command with Function}
-
+\label{ReplaceCommandWithFunction}
 \begin{itemize}
     \item \textbf{Problema} Tiene un fragmento de código que se puede agrupar.
     \item \textbf{Solución} Mueva este código a un nuevo método (o función) separado y reemplace el código antiguo con una llamada al método.
