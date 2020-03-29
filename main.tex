@@ -73,7 +73,6 @@ Como una regla de oro, si sientes la necesidad de comentar algo dentro de un mé
 
 
 
-
 \subsection{Clase larga -   Large Class}
 \label{largeclass}
 \subsubsection{Signos y Sintomas - Signs and Symptoms}
@@ -215,9 +214,7 @@ Suelen surgir por una estructura pobre o por la programación copiar-pegar.
 \begin{itemize}
     \item Dividir el comportamiento de la clase, con la refactorización de extraer clase \ref{extractclass}.
     \item Si varias clases tienen el mismo comportamiento, se puede combinar mediante herencia (refactorizaciones de Extraer Superclase \hyperef[extractsuperclass] y Extraer Subclase \hyperef[extractsubclass]).
-\end{itemize}
-
-\newline
+\end{itemize} 
 
 \textbf{Ventajas}
 \begin{itemize}
@@ -237,6 +234,7 @@ Suele surgir cuando una funcionalidad se ha repartido entre varias clases. Puede
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Prescindibles - Dispensables}
 
 %A dispensable is something pointless and unneeded whose absence would make the code cleaner, more efficient and easier to understand.%
@@ -560,10 +558,10 @@ These refactoring techniques help with data handling, replacing primitives with 
     \lstinputlisting[language = java]{introduceAssertionSolution.java}
 \end{itemize}  
 
+%%%%%%%%% ANTONIO MIGUEL %%%%%%%%%
+\section{Método simplificado de llamadas}
 
-\section{Simplifying Method Calls}
-
-These techniques make method calls simpler and easier to understand. This, in turn, simplifies the interfaces for interaction between classes.
+Estas técnicas hacen que las llamadas a métodos sean más simples y fáciles de entender. Esto, a su vez, simplifica las interfaces para la interacción entre clases.
 
 \subsection{Renombrar método - Rename Method}
 \label{renombrarmetodo}
@@ -571,68 +569,199 @@ These techniques make method calls simpler and easier to understand. This, in tu
     \item \textbf{Problema} Aparece cuando un método no explica lo que hace 
     \item \textbf{Solución} Se renombra el método
 \end{itemize}
-    
-%\lstinputlisting[firstline=1, firstnumber=1, nolol=true]{extractmethod.java}
-\lstinputlisting[language = java]{extractmethod.java}
 
-     
+\subsection{Añadir parámetro - Add Parameter}
+\label{anadirparametro}
+\begin{itemize}
+    \item \textbf{Problema} Un método no tiene suficientes datos para realizar ciertas acciones.
+    \item \textbf{Solución} Añada un nuevo parámetro para pasar los datos necesarios.
+\end{itemize}
     
-    Add Parameter
+\subsection{Borrar parámetro - Remove Parameter}
+\label{borrarparametro}
+\begin{itemize}
+    \item \textbf{Problema} Un parámetro no se utiliza en el cuerpo de un método.
+    \item \textbf{Solución} Elimina el parámetro.
+\end{itemize}
+
+\subsection{Consulta separada del modificador - Separate Query from Modifier}
+\label{consultaseparadamodificador}
+\begin{itemize}
+    \item \textbf{Problema} ¿Tiene un método que devuelve un valor pero también cambia algo dentro de un objeto?
+    \item \textbf{Solucion} Divida el método en dos métodos separados. Como era de esperar, uno de ellos debería devolver el valor y el otro modifica el objeto.
+\end{itemize}
+
+\subsection{Método parametrizado - Parameterize Methodr}
+\label{metodoparametrizado}
+\begin{itemize}
+    \item \textbf{Problema} Múltiples métodos realizan acciones similares que son diferentes solo en sus valores internos, números u operaciones.
+    \item \textbf{Solución} Combine estos métodos utilizando un parámetro que pasará el valor especial necesario.
+\end{itemize}
+
+\subsection{Reemplazar parametro con un método explicito - Replace Parameter with Explicit Methods}
+\label{reemplazarparametrometodoexplicito}
+\begin{itemize}
+    \item \textbf{Problema} Un método se divide en partes, cada una de las cuales se ejecuta según el valor de un parámetro.
+    \item \textbf{Solución} Extraiga las partes individuales del método en sus propios métodos y llámelas en lugar del método original.
+\end{itemize}
+
+\subsection{Preserva todo el objeto - Preserve Whole Object}
+\label{preservatodoelobjeto}
+\begin{itemize}
+    \item \textbf{Problema} Obtiene varios valores de un objeto y luego los pasa como parámetros a un método.
+    \item \textbf{Solución} en su lugar, intente pasar todo el objeto.
+\end{itemize}
     
-    Remove Parameter
+\lstinputlisting[language = java]{preserveWholeObject.java}
+
+\subsection{Reemplazar parámetro con llamada a método - Replace Parameter with Method Call}
+\label{reemplazarparametrollamadametodo}
+\begin{itemize}
+    \item \textbf{Problema} Antes de la llamada a un método, se ejecuta un segundo método y su resultado se envía de vuelta al primer método como argumento. Pero el valor del parámetro podría haberse obtenido dentro del método que se llama.
+    \item \textbf{Solución} En lugar de pasar el valor a través de un parámetro, coloque el código de obtención de valor dentro del método.
+\end{itemize}
+
+\lstinputlisting[language = java]{replaceParameterWithMethodCall.java}
+
+\subsection{Introducir un objeto como parámetro - Introduce Parameter Object}
+\label{introduceobjetoparametro}
+\begin{itemize}
+    \item \textbf{Problema} Sus métodos contienen un grupo repetitivo de parámetros.   
+   \item \textbf{Solución} Reemplace estos parámetros con un objeto.
+\end{itemize}
+
+\subsection{Eliminar método de configuración - Remove Setting Method}
+\label{eliminarmetodoconfig}
+\begin{itemize}
+    \item \textbf{Problema} El valor de un campo debe establecerse solo cuando se crea, y no cambiar en ningún momento después de eso.
+    \item \textbf{Solución}  Elimine los métodos que establecen el valor del campo.
+\end{itemize}
+
+\subsection{Método oculto - Hide Method}
+\label{metodooculto}
+\begin{itemize}
+    \item \textbf{Problema} Otras clases no usan un método o solo se usan dentro de su propia jerarquía de clases.
+    \item \textbf{Solución} Haz el método privado o protegido.
+\end{itemize}
+
+\subsection{Reemplazar constructor con método factory - Replace Constructor with Factory Method}
+\label{reemplazarconstructorfactory}
+\begin{itemize}
+    \item \textbf{Problema} Tiene un constructor complejo que hace algo más que simplemente establecer valores de parámetros en campos de objeto.
+    \item \textbf{Solución} Cree un método factory y usalo para reemplazar las llamadas al  constructor.
+\end{itemize}
     
-    Separate Query from Modifier
+\lstinputlisting[language = java]{replaceConstructorWithFactoryMethod.java}
+
+\subsection{Reemplazar código de error con excepción - Replace Error Code with Exception}
+\label{reemplazarcodigoerrorexcepcion}
+\begin{itemize}
+    \item \textbf{Problema} ¿Un método devuelve un valor especial que indica un error?
+    \item \textbf{Solución} Devolver una excepción.
+\end{itemize}
     
-    Parameterize Method
+\lstinputlisting[language = java]{replaceErrorCodeWithException.java}
+
+\subsection{Reemplazar excepción con test - Replace Exception with Test}
+\label{reemplazarexcepcioncontest}
+\begin{itemize}
+    \item \textbf{Problema} ¿Lanzas una excepción en un lugar donde una simple prueba haría el trabajo?
+    \item \textbf{Solución} Reemplace la excepción con una prueba de condición.
+\end{itemize}
     
-    Replace Parameter with Explicit Methods
-    
-    Preserve Whole Object
-    
-    Replace Parameter with Method Call
-    
-    Introduce Parameter Object
-    
-    Remove Setting Method
-    
-    Hide Method
-    
-    Replace Constructor with Factory Method
-    
-    Replace Error Code with Exception
-    
-    Replace Exception with Test
+\lstinputlisting[language = java]{replaceExceptionWithTest.java}
+
+%%%%% Dealing with Generalisation
+
+\section{Tratando con la generalización - Dealing with Generalisation}
+La abstracción tiene su propio grupo de técnicas de refactorización, principalmente asociadas con la funcionalidad de movimiento a lo largo de la jerarquía de herencia de clases, creando nuevas clases e interfaces, y reemplazando la herencia con delegación y viceversa.
+
+\label{renombrarmetodo}
+\begin{itemize}
+    \item \textbf{Problema} Dos clases tienen el mismo campo.
+    \item \textbf{Solución} Elimine el campo de las subclases y muévalo a la superclase.
+\end{itemize}
+
+\subsection{Método Pull Up - Pull Up Method}
+\label{renombrarmetodo}
+\begin{itemize}
+    \item \textbf{Problema} sus subclases tienen métodos que realizan un trabajo similar.
+    \item \textbf{Solución} Haga que los métodos sean idénticos y luego muévalos a la superclase relevante
+\end{itemize}
+
+\subsection{Levante el cuerpo del constructor - Pull Up Constructor Body}
+\label{renombrarmetodo}
+\begin{itemize}
+    \item \textbf{Problema} Sus subclases tienen constructores con código que es casi idéntico.
+    \item \textbf{Solución} Cree un constructor de superclase y mueva el código que es el mismo en las subclases. Llame al constructor de la superclase en los constructores de la subclase.
+\end{itemize}
+\lstinputlisting[language = java]{pullUpConstructorBody.java}
+
+\subsection{Método de empuje - Push Down Method}
+\label{renombrarmetodo}
+\begin{itemize}
+    \item \textbf{Problema} ¿El comportamiento implementado en una superclase solo lo usan una (o algunas) subclases?
+    \item \textbf{Solución} Mueva este comportamiento a las subclases.
+\end{itemize}
+
+\subsection{Campo de empuje – Push down field}
+\label{renombrarmetodo}
+\begin{itemize}
+    \item \textbf{Problema} ¿Se utiliza un campo solo en algunas subclases?
+    \item \textbf{Solución} Mueva el campo a estas subclases.
+\end{itemize}
+
+\subsection{Extraer subclase - Extract Subclass}
+\label{renombrarmetodo}
+\begin{itemize}
+    \item \textbf{Problema} Una clase tiene características que se usan solo en ciertos casos.
+    \item \textbf{Solución} Cree una subclase y úsela en estos casos.
+\end{itemize}
+
+\subsection{Extraer superclase - Extract Superclass}
+\label{renombrarmetodo}
+\begin{itemize}
+    \item \textbf{Problema} Tiene dos clases con campos y métodos comunes.
+    \item \textbf{Solución} Cree una superclase compartida para ellos y muévales todos los campos y métodos idénticos.
+\end{itemize}
+
+\subsection{Interfaz de extracción - Extract Interface}
+\label{renombrarmetodo}
+\begin{itemize}
+    \item \textbf{Problema} Varios clientes utilizan la misma parte de una interfaz de clase. Otro caso: parte de la interfaz en dos clases es la misma.
+    \item \textbf{Solución} Mueva esta porción idéntica a su propia interfaz.
+\end{itemize}
+
+\subsection{Contraer jerarquía - Collapse Hierarchy}
+\label{renombrarmetodo}
+\begin{itemize}
+    \item \textbf{Problema} Tiene una jerarquía de clases en la que una subclase es prácticamente igual a su superclase.
+    \item \textbf{Solución} Fusionar la subclase y la superclase.
+\end{itemize}
+
+\subsection{Método de plantilla de formulario - Form Template Method}
+\label{renombrarmetodo}
+\begin{itemize}
+    \item \textbf{Problema} Sus subclases implementan algoritmos que contienen pasos similares en el mismo orden.
+    \item \textbf{Solución}  Mueva la estructura del algoritmo y los pasos idénticos a una superclase, y deje la implementación de los diferentes pasos en las subclases.
+\end{itemize}
+
+\subsection{Reemplazar herencia con delegación- Replace Inheritance with Delegation}
+\label{renombrarmetodo}
+\begin{itemize}
+    \item \textbf{Problema} Tiene una subclase que usa solo una parte de los métodos de su superclase (o no es posible heredar los datos de la superclase).
+    \item \textbf{Solución} Cree un campo y coloque un objeto de superclase en él, delegue métodos al objeto de superclase y elimine la herencia.
+\end{itemize}
+
+\subsection{Reemplazar delegación con herencia - Replace Delegation with Inheritance}
+\label{renombrarmetodo}
+\begin{itemize}
+    \item \textbf{Problema} Una clase contiene muchos métodos simples que delegan a todos los métodos de otra clase.
+    \item \textbf{Solución} Haga de la clase un heredero delegado, lo que hace innecesarios los métodos de delegación.
+\end{itemize}
 
 
-
-
-\section{Dealing with Generalisation}
-
-Abstraction has its own group of refactoring techniques, primarily associated with moving functionality along the class inheritance hierarchy, creating new classes and interfaces, and replacing inheritance with delegation and vice versa.
-
-    Pull Up Field
-    
-    Pull Up Method
-    
-    Pull Up Constructor Body
-    
-    Push Down Method
-    
-    Push Down Field
-    
-    Extract Subclass
-    
-    Extract Superclass
-    
-    Extract Interface
-    
-    Collapse Hierarchy
-    
-    Form Template Method
-    
-    Replace Inheritance with Delegation
-    
-    Replace Delegation with Inheritance
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \section{Otras refactorizaciones de Fowler}
@@ -859,9 +988,41 @@ Split Variable
 
 \chapter{Caso 2: Alejandro Francisco}
 \textbf{Refactorizador:} Juan Soler
-\textbf{Refactoriza:} Francisco José Martín
 
+\textbf{Refactoriza:} Francisco José Martín \newline
+%\lstinputlisting[language = java,firstline=14,lastline=17]{Pueblo.java}
+%\lstinputlisting[language = java,linerange=14-17,firstnumber=14]{Pueblo.java}
 
+    \hyperref[DeadCode]{\textbf{Dead Code}}
+    
+    \textbf{Razón:} El constructor de la clase Pueblo que recibe una lista de tramos no se usa nunca.
+    
+    \lstinputlisting[language = java]{alumno2DeadCode.java}
+    
+    \hyperref[LongMethod]{\textbf{Long Method}}
+    
+    \textbf{Razón:} El método contiene más de diez lineas, habiendo algunas que podrían sacarse a otros métodos. Como veremos más adelante.
+    
+    \lstinputlisting[language = java]{alumno2LongMethod.java}
+    
+    \hyperref[RenameVariable]{\textbf{Rename Variable}}
+    
+    \textbf{Razón:} La variable no explica qué se quiere confirmar si es verdadero o falso.
+    
+    \lstinputlisting[language = java]{alumno2RenameVariable.java}
+    
+    \hyperref[RenameField]{\textbf{Rename Field}}
+    
+    \textbf{Razón:} El nombre del método, aunque bastante indicativo de lo que hace, podría serlo más.
+    
+    \lstinputlisting[language = java]{alumno2RenameField.java}
+    
+    \hyperref[ExtractMethod]{\textbf{Extract Method}}
+    
+    \textbf{Razón:} Del método MCD antes comentado en \textbf{LongMethod}, este condicional que da valor a una variable podría extraerse para un nuevo método.
+    
+    \lstinputlisting[language = java, firstline=10,lastline=14]{alumno2LongMethod.java}
+    
 \chapter {Caso 3: Francisco José Martín}
 % refactorizar por: Alejandro Francisco
 
@@ -879,8 +1040,19 @@ Split Variable
 % refactorizado por: Adalid Abraham Villanueva Hermoza
 
 \chapter {Caso 7: Jose Antonio Parra Sánchez}
+\textbf{Propuestas: } Revisando el código, se puede apreciar una buena gestión de las clases ya que podemos encontrar una carpeta ``models'' que contiene los objetos que forman parte de la solución del problema. Pero, personalmente, dichos objetos no los habría colocado en un package distinto al del main. Otro package que podemos encontrar es ``util'', pero este solo tiene una clase vacía por lo que no sabría exactamente cual es su función. A continuación se señalarán algunas propuestas más enfocadas en el código.
 
-
+\begin{itemize}
+    \item \textbf{Comentarios: } En la clase main podemos encontrar un segmento de código comentado prescindible.
+    \lstinputlisting[language = java, firstline=24,lastline=32]{alumno7MetodoLargo.java}
+    
+     \item \textbf{Renombrar Variable: } Siguiendo en la misma clase, hay una variable temporal que recibe el nombre de ``temp'', pero desde mi punto de vista puede resultar un nombre confuso por lo que yo lo reemplazaría por ``aux''.
+     \lstinputlisting[language = java]{alumno7RenombrarVariable.java}
+     
+      \item \textbf{Método Largo: } El método ``introducirDatos()'' realiza más funciones de lo que su nombre indica, podría renombrarse el método a un nombre más adecuado o dividir el método en dos.
+          \lstinputlisting[language = java]{alumno7MetodoLargo.java}
+  
+\end{itemize}
 
 
 
