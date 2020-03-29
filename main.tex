@@ -73,7 +73,6 @@ Como una regla de oro, si sientes la necesidad de comentar algo dentro de un mé
 
 
 
-
 \subsection{Clase larga -   Large Class}
 \label{largeclass}
 \subsubsection{Signos y Sintomas - Signs and Symptoms}
@@ -215,9 +214,7 @@ Suelen surgir por una estructura pobre o por la programación copiar-pegar.
 \begin{itemize}
     \item Dividir el comportamiento de la clase, con la refactorización de extraer clase \ref{extractclass}.
     \item Si varias clases tienen el mismo comportamiento, se puede combinar mediante herencia (refactorizaciones de Extraer Superclase \hyperef[extractsuperclass] y Extraer Subclase \hyperef[extractsubclass]).
-\end{itemize}
-
-\newline
+\end{itemize} 
 
 \textbf{Ventajas}
 \begin{itemize}
@@ -237,6 +234,7 @@ Suele surgir cuando una funcionalidad se ha repartido entre varias clases. Puede
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Prescindibles - Dispensables}
 
 %A dispensable is something pointless and unneeded whose absence would make the code cleaner, more efficient and easier to understand.%
@@ -560,7 +558,6 @@ These refactoring techniques help with data handling, replacing primitives with 
     \lstinputlisting[language = java]{introduceAssertionSolution.java}
 \end{itemize}  
 
-
 %%%%%%%%% ANTONIO MIGUEL %%%%%%%%%
 \section{Método simplificado de llamadas}
 
@@ -762,7 +759,6 @@ La abstracción tiene su propio grupo de técnicas de refactorización, principa
     \item \textbf{Problema} Una clase contiene muchos métodos simples que delegan a todos los métodos de otra clase.
     \item \textbf{Solución} Haga de la clase un heredero delegado, lo que hace innecesarios los métodos de delegación.
 \end{itemize}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -990,9 +986,41 @@ Split Variable
 
 \chapter{Caso 2: Alejandro Francisco}
 \textbf{Refactorizador:} Juan Soler
-\textbf{Refactoriza:} Francisco José Martín
 
+\textbf{Refactoriza:} Francisco José Martín \newline
+%\lstinputlisting[language = java,firstline=14,lastline=17]{Pueblo.java}
+%\lstinputlisting[language = java,linerange=14-17,firstnumber=14]{Pueblo.java}
 
+    \hyperref[DeadCode]{\textbf{Dead Code}}
+    
+    \textbf{Razón:} El constructor de la clase Pueblo que recibe una lista de tramos no se usa nunca.
+    
+    \lstinputlisting[language = java]{alumno2DeadCode.java}
+    
+    \hyperref[LongMethod]{\textbf{Long Method}}
+    
+    \textbf{Razón:} El método contiene más de diez lineas, habiendo algunas que podrían sacarse a otros métodos. Como veremos más adelante.
+    
+    \lstinputlisting[language = java]{alumno2LongMethod.java}
+    
+    \hyperref[RenameVariable]{\textbf{Rename Variable}}
+    
+    \textbf{Razón:} La variable no explica qué se quiere confirmar si es verdadero o falso.
+    
+    \lstinputlisting[language = java]{alumno2RenameVariable.java}
+    
+    \hyperref[RenameField]{\textbf{Rename Field}}
+    
+    \textbf{Razón:} El nombre del método, aunque bastante indicativo de lo que hace, podría serlo más.
+    
+    \lstinputlisting[language = java]{alumno2RenameField.java}
+    
+    \hyperref[ExtractMethod]{\textbf{Extract Method}}
+    
+    \textbf{Razón:} Del método MCD antes comentado en \textbf{LongMethod}, este condicional que da valor a una variable podría extraerse para un nuevo método.
+    
+    \lstinputlisting[language = java, firstline=10,lastline=14]{alumno2LongMethod.java}
+    
 \chapter {Caso 3: Francisco José Martín}
 % refactorizar por: Alejandro Francisco
 
@@ -1010,8 +1038,19 @@ Split Variable
 % refactorizado por: Adalid Abraham Villanueva Hermoza
 
 \chapter {Caso 7: Jose Antonio Parra Sánchez}
+\textbf{Propuestas: } Revisando el código, se puede apreciar una buena gestión de las clases ya que podemos encontrar una carpeta ``models'' que contiene los objetos que forman parte de la solución del problema. Pero, personalmente, dichos objetos no los habría colocado en un package distinto al del main. Otro package que podemos encontrar es ``util'', pero este solo tiene una clase vacía por lo que no sabría exactamente cual es su función. A continuación se señalarán algunas propuestas más enfocadas en el código.
 
-
+\begin{itemize}
+    \item \textbf{Comentarios: } En la clase main podemos encontrar un segmento de código comentado prescindible.
+    \lstinputlisting[language = java, firstline=24,lastline=32]{alumno7MetodoLargo.java}
+    
+     \item \textbf{Renombrar Variable: } Siguiendo en la misma clase, hay una variable temporal que recibe el nombre de ``temp'', pero desde mi punto de vista puede resultar un nombre confuso por lo que yo lo reemplazaría por ``aux''.
+     \lstinputlisting[language = java]{alumno7RenombrarVariable.java}
+     
+      \item \textbf{Método Largo: } El método ``introducirDatos()'' realiza más funciones de lo que su nombre indica, podría renombrarse el método a un nombre más adecuado o dividir el método en dos.
+          \lstinputlisting[language = java]{alumno7MetodoLargo.java}
+  
+\end{itemize}
 
 
 
