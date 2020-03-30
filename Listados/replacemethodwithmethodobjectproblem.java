@@ -1,7 +1,9 @@
-clase  Order  { // ... public double price ( ) { 
-    double primaryBasePrice ; 
-    double secundarioBasePrice ; 
-    double terciarioBasePrice ; 
-    // Realizar cálculos largos. 
-    }
+class Order {
+  // ...
+  public double price() {
+    double primaryBasePrice;
+    double secondaryBasePrice;
+    double tertiaryBasePrice;
+    // Perform long computation.
+  }
 }
