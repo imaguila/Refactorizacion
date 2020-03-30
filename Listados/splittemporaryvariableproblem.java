@@ -1,1 +1,4 @@
-doble  temp  =  2  *  ( alto  +  ancho ) ; Sistema . a cabo . println ( temp ) ; temp = altura * ancho ; Sistema . a cabo . println ( temp ) ;
+double temp = 2 * (height + width);
+System.out.println(temp);
+temp = height * width;
+System.out.println(temp);
