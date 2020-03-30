@@ -256,22 +256,61 @@ Dead Code
 
     Speculative Generality
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%-----Francisco José----%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Couplers}
 
-All the smells in this group contribute to excessive coupling between classes or show what happens if coupling is replaced by excessive delegation.
+Todos estos smells en este grupo contribuyen al excesivo acoplamiento entre clases o muestran que ocurre si el acoplamiento es reemplazado por delegación excesiva. 
 
-    Feature Envy
-    
-    Inappropriate Intimacy
-    
-    Message Chains
-    
-    Middle Man
+\subsection{Característica envidia - Feature Envy}
+\label{featureenvy}
+Este smell ocurre después de que campos sean movidos a los datos de otra clase. En este caso, quieres mover las operaciones de esos datos a la clase también.
+\newline
+Como regla básica, si las cosas cambian al mismo tiempo, deberías de mantenerlas en el mismo sitio. Normalmente, los datos y las funciones que usan esos datos son cambios juntos (aunque son posibles las excepciones).
+\begin{itemize}
+    \item Si un método claramente debería de moverse a otro lugar, usa move method.
+    \item Si solo una parte del método accede a los datos de otra objeto, usa extract method para mover la parte en cuestión.
+    \item Si un método usa funciones de varias clases, primero determina qué clase contiene la mayoría de los datos usados. Entonces mueve el método a lo largo de esta clase con los datos. Alternativamente, usa extract method para separar el método en varias partes que pueden ser colocadas en diferentes lugares en diferentes clases.
+\end{itemize}
 
-    Incomplete Library Class
+\subsection{Intimidad inapropiada - Inappropriate Intimacy}
+\label{inappropriateintimacy}
+Mantén cerca un ojo sobre las clases que gastan mucho tiempo juntas. Las buenas clases deberían saber un poco sobre la otra como sea. Tales clases son más fáciles de mantener y reutilizar.
+\newline
+\begin{itemize}
+    \item La solución más simple es usar move method y move field para mover las partes de una clase a la otra en la cual están las partes que se están usando. Pero esto solo funciona si una de las clases realmente no necesita esas partes.
+    \item Otra solución es usar extract class y hide delegate sobre la clases para hacer las relaciones de código "oficiales".
+    \item Si las clases son mutuamente interdependientes, deberías usar change bidirectional association to unidirectional.
+    \item Si esta "intimidad" está entre una subclase y la superclase, considera replace delegation with inheritance.
+\end{itemize}
+    
+\subsection{Cadenas de mensajes - Message Chains}
+\label{messagechains}
+Una cadena de mensajes puede ocurrir cuando un cliente solicita a otro objeto, este objeto solicita también a otro, y así. Estas cadenas significan que el cliente es dependiente sobre navegar a lo largo de la estructura de la clase. Cualquier cambio en estas relaciones requiere modificación del cliente.
+\newline
+\begin{itemize}
+    \item Para borrar una cadena de mensajes, usa hide delegate.
+    \item A veces es mejor pensar en porque el objeto final esta siendo usado. Quizás este tendría sentido usar extract method para su funcionalidad y mover este a el principio de la cadena, usando move method.
+\end{itemize}
+    
+\subsection{Hombre en el medio - Middle Man}
+\label{middleman}
+Este smell puede ser el resultado del sobre entusiasmo de eliminación de cadenas de mensajes.
+\newline
+En otros casos, esto puede ser el resultado de el sobre trabajo de una clase siendo movida gradualmente a otras clases. La clase permanece como una concha vacía que no hace nada más que otro delegado.
+\begin{itemize}
+    \item Si la mayoría de las métodos de una clase delegan a otra clase, elimina\ref{middleman} es lo correcto.
+\end{itemize}
 
+\subsection{Librerías de clases incompletas - Incomplete Library Class}
+\label{incompletelibraryclass}
+El autor de la librería no ha proporcionado las características que necesitas o ha rechazado implementarlas.
+\begin{itemize}
+    \item Para introducir unos pocos métodos a una librería, usa introducir foreign method.
+    \item Para grandes cambios en una clase de la librería, usa introducir local extension.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Other Smells}
 
@@ -869,7 +908,13 @@ Replace Function with Command
 Replace Inline Code with Function Call
 
 \subsection{Grupo 4}
-Replace Loop with Pipeline
+\textbf{Replace Loop with Pipeline}
+\label{ReplaceLoopWithPipeline}
+\begin{itemize}
+    \item \textbf{Problema}
+    \lstinputlisting[language = java]{ReplaceLoppWithPipelineProblem.java}
+\end{itemize}
+
 
 Replace Magic Literal
 
@@ -1029,17 +1074,27 @@ Split Variable
 
 \chapter {Caso 4: Francisco Jesús García López}
 \textbf{Refactorizador:} Francisco José Martín
-\textbf{Refactoriza:} Adalid Abraham Villanueva Hermoza 
+
+
+
+
 
 
 
 \chapter {Caso 5: Adalid Abraham Villanueva Hermoza}
+\textbf{Refactoriza:} Fco Jesus Garcia López
 
 
 \chapter {Caso 6: Marius Cosmin Magurean}
 % refactorizado por: Adalid Abraham Villanueva Hermoza
 
+
+\chapter {Caso 9: Antonio}
+\textbf{Refactoriza:} Marius Cosmin
+
+
 \chapter {Caso 7: Jose Antonio Parra Sánchez}
+
 \textbf{Propuestas: } Revisando el código, se puede apreciar una buena gestión de las clases ya que podemos encontrar una carpeta ``models'' que contiene los objetos que forman parte de la solución del problema. Pero, personalmente, dichos objetos no los habría colocado en un package distinto al del main. Otro package que podemos encontrar es ``util'', pero este solo tiene una clase vacía por lo que no sabría exactamente cual es su función. A continuación se señalarán algunas propuestas más enfocadas en el código.
 
 \begin{itemize}
