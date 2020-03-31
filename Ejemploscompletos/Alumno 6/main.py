@@ -10,7 +10,6 @@ if __name__ == '__main__':
         while True:
             try:
                 burros, sacos = [int(x) for x in input("Introduzca el número de burros y sacos [1 - 1.000.000]: ").split(' ')]
-                
                 break
             except ValueError:
                 print ("ATENCIÓN: Debe ingresar dos números enteros.")
