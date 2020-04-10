@@ -210,23 +210,27 @@ Mira el código usado por esos campos. Quizás sea una buena idea mover el códi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%-----ALEJANDRO----%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Object-Orientation Abusers} 
-\label{Object-OrientationAbusers}
-All these smells are incomplete or incorrect application of object-oriented programming principles.
-    \newline
-    
-    \textbf{Switch Statements} \newline
+\label{object-orientationabusers}
+All these smells are incomplete or incorrect application of object-oriented programming principles.\newline
+
+    \subsection{Switch Statements}
+    \label{switchstatements}
     Traducido como \textit{cambio declarativo}, ocurre cuando tienes un operador \textit{switch} o una secuencia de declaraciones \textit{if}.
     \newline
     
-    \textbf{Temporary Field}  \newline
+    
+    \subsection{Temporary Field} 
+    \label{temporaryfield}
     Traducido como \textit{campos temporales}, ocurre cuando los campos temporales obtienen sus valores(necesitados por objetos) solo bajo ciertas circunstancias. Fuera de estas circunstancias, están vacías.
     \newline
     
-    \textbf{Refused Bequest}  \newline
+    \subsection{Refused Bequest}  
+    \label{refusedbequest}
     Traducido como \textit{rechazo de herencia}, ocurre si una \textit{subclase} usa solo alguno de los métodos y propiedades heredados de sus padres, la jerarquía esta fuera de lugar. Los métodos no necesarios pueden simplemente acabar sin ser usados o ser redefinidos y lanzar excepciones.
     \newline
     
-    \textbf{Alternative Classes with Different Interfaces}  \newline
+    \subsection{Alternative Classes with Different Interfaces}  
+    \label{alternativeclasseswithdifferentinterfaces}
     Traducido como \textit{clases alternativas con interfaces distintas}, ocurre cuando dos clases llevan a cabo funciones idénticas pero usan nombres de método distinto.
     \newline
 
@@ -275,26 +279,132 @@ Suele surgir cuando una funcionalidad se ha repartido entre varias clases. Puede
 
 Un dispensable es aquello innecesario y sin sentido cuya ausencia haría del código más limpio, eficiente y fácil de entender
 
+\subsection{Comments - Comentarios}
+\label{comments}
+Usualmente, los comentarios son creados con las mejores intenciones, cuando el autor se da cuenta que el código no es lo suficientemente intuitivo u obvio. En estos casos, los comentarios suelen enmascarar el olor de un código que debería ser mejorado.
 
-    \subsection{Comments - Comentarios}
-    \label{comments}
-    Usualmente, los comentarios son creados con las mejores intenciones, cuando el autor se da cuenta que el código no es lo suficientemente intuitivo u obvio. En estos casos, los comentarios suelen enmascarar el olor de un código que debería ser mejorado.
-    \newline
-    \centering "El mejor comentario es un buen nombre para un método o una clase"
-    \newline
+{\centering''El mejor comentario es un buen nombre para un método o una clase''\par}
+\subsubsection{Tratamiento}
+\begin{itemize}
+    \item Si un comentario tiene la intención de explicar una expresión compleja, la expresión debe ser divida en subexpresiones entendibles utilizando el método de Extracción de Variables[\pageref{extracvariable}].
+    \item Si un comentario explica una sección del código, esta sección puede convertirse en métodos separados utilizando Extracción de Métodos[\pageref{extractmethod}]. El nombre del nuevo método puede ser tomado del comentario en sí, usualmente.
+    \item Si un método ya ha sido extraído, pero pero los comentarios aún son necesarios para explicar lo que realiza el método en cuestión, se ha de dar un nombre claro al método. Utilice el Método de Renombrar[\pageref{renombrarmetodo}] para esto
+    \item Si necesitas aseverar reglas sobre el estado del sistema, necesario para su ejecución, utilice Introducir Aserciones[\pageref{}].
+\end{itemize}
+\subsubsection{Beneficios}
+El código se vuelve más intuitivo y obvio.
+\subsection{Cuando Ignorar}
+Los comentarios pueden a veces ser útiles cuando:
+\begin{itemize}
+    \item Se necesita explicar el por qué algo está implementado de una manera particular.
+    \item Es necesario explica algoritmos complejos (cuando todos los otros métodos para simplificar el algoritmo han sido utilizados y es insuficiente).
+\end{itemize}
     
-    
-    
-    Duplicate Code
-    
-    Lazy Class
+\subsection{Duplicate Code - Código Duplicado}
+\label{duplicateCode}
+La Duplicación usualmente ocurre cuando múltiples programadores trabajan en diferentes partes del mismo programa al mismo tiempo. Ya que se trabaja en distintas tareas, pueden que no sean conscientes de que los demás ya hayan escrito un código similar que puede ser reutilizado para sus propias necesidades.
+\newline
+También puede ocurrir una duplicación sutil, cuando partes de un código lucen diferentes pero en realidad realizan el mismo trabajo. Este tipo de duplicación es difícil de encontrar y corregir.
+\newline
+A veces duplicar tiene un propósito. Cuando se necesita cumplir un plazo y un código existente es ''casi adecuado'' para su realización, programadores novatos no pueden resistir la tentación de copiar y pegar el código relevante. En algunos casos, el programadores es simplemente muy perezoso para reorganizar el código.
+\subsubsection{Tratamiento}
+\begin{itemize}
+    \item Si el mismo código es encontrado en dos o más métodos en la misma clase: usar Extracción de Métodos[\pageref{extractmethod}].
+    \item Si el mismo código es encontrado en dos subclases del mismo nivel:
+    \begin{itemize}
+        \item Usar Extracción de Métodos[\pageref{extractmethod}] para ambas clases, seguido de una Subida del Campo[\pageref{pullupfield}] para los campos usados en el método que sube de nivel.
+        \item Si el código duplicado esta dentro del constructor, usar la Subida del Cuerpo del Constructor[\pageref{pullupconstructorbody}].
+        \item Si el código duplicado es similar pero no completamente idéntico, usar el Método de Plantilla de Formulario[\pageref{formtemplatemethod}].
+        \item Si dos métodos realizan la misma acción pero usan diferentes algoritmos, selecciona el mejor algoritmo y aplica el Algoritmo. Sustituto[\pageref{substitutealgorithm}]
+    \end{itemize}
+    \item Si un código duplicado es encontrado en en dos diferentes clases.
+    \begin{itemize}
+        \item Si las clases no pertenecen a una herencia, usar la Extracción de Superclase[\pageref{extractsubclass}] para crear una única Superclase para estas clases que mantendrán todas sus funcionalidades previas.
+        \item Si es difícil o imposible de crear una superclase, utilizar la Extracción de Clase[\pageref{extractclass}] en una clase y utilizar el nuevo componente en otra
+    \end{itemize}
+    \item Si un numero grande de expresiones condicionales están presentes y realizan el mismo código (siendo diferente solo las condiciones), combinamos las operaciones en una sola condición usando la Consolidación de una Expresión Condicional[\pageref{}] y usar la Extracción de Métodos[\pageref{extractmethod}] para colocar la condición en un método separado con un nombre fácil de entender.
+    \item Si el mismo código se realiza en varias ramas de una expresión condicional: colocar el código idéntico fuera del árbol de condición utilizando la Consolidación de Fragmentos de Condicionales Duplicados
+\end{itemize}
+\subsubsection{Beneficios}
+\begin{itemize}
+    \item Fusionando el código duplicado simplifica la estructura del código y lo hace más corto
+    \item Simplificación + brevedad =  código más fácil de simplificar y de mantenimiento de bajo coste
+\end{itemize}
+\subsubsection{Cuando Ignorar}
+En raros casos, fusionar dos fragmentos idénticos de código puede hacer del mismo menos intuitivo y obvio
 
-    Data Class
+\subsection{Lazy Class - Clase Perezosa}
+\label{lazyclass}
+Entender y mantener clases siempre cuesta tiempo y dinero. Por ello, si una clase no realiza lo suficiente para ganar tu atención, ésta debería ser eliminada
+\subsubsection{Tratamiento}
+\begin{itemize}
+    \item Componentes que son casi inútiles deberían ser tratados como una Clase Linea
+    \item Para subclases con algunas funciones, probar Colapso de Herencia[\pageref{colapsehierarchy}]
+\end{itemize}
+\subsubsection{Beneficios}
+\begin{itemize}
+    \item Reduce el tamaño del código
+    \item Fácil de mantener
+\end{itemize}
+\subsubsection{Cuando Ignorar}
+A veces una Clase Perezosa es creada con la intención de marcar futuro desarrollo. En este caso, se ha de tratar de mantener un balance entre claridad y simplicidad del código  
 
-    Dead Code
-    \label{deadcode}
+\subsection{Data Class - Clase de Datos}
+\label{dataClass}
+Una Clase de Datos se refiere a una clase que contiene solamente campos y métodos crudos para su acceso (getters y setters). Estos son simples contenedores de datos usados por otras clases. Estas clases no contienen ninguna funcionalidad adicional y no pueden operar de manera independiente con sus datos propios.
+\subsubsection{Tratamiento}
+\begin{itemize}
+    \item Si la clase contiene campos públicos, se utilizará Campo Encapsulado[\pageref{encapsulatefield}] para esconderlos del acceso directo y que se requiera el uso de getters y setter para su acceso.
+    \item Utiliza Colección Encapsulada para datos almacenados en colecciones (como arrays)
+    \item Revisa el código cliente que utiliza la clase. En ella, se puede encontrar funcionalidades que sería mejor localizar en la propia clase de datos. Si este fuera el caso, se utilizará Mover Método[\pageref{moveMethod}] y Extraer Método[\pageref{extractmethod}] para migrar la funcionalidad a la Clase de Datos
+    \item Después de que una clase haya sido llenada de métodos bien definidos, probablemente se quiera eliminar métodos antiguos para el acceso a los datos que dan demasiado acceso a la Clase de Datos. Para esto, Eliminar Métodos Set[\pageref{removesettingmethod}] y Esconder Método[\pageref{hidemethod}] serán de ayuda.
+\end{itemize}
+\subsubsection{Beneficios}
+\begin{itemize}
+    \item Mejora el entendimiento y la organización del código. Operaciones de un dato en particular están ahora juntos en un solo lugar, en vez de estar de manera dispersa en el código.
+    \item Ayuda a que se encuentre la duplicación del código cliente
+\end{itemize}
 
-    Speculative Generality
+\subsection{Dead Code - Código Muerto}
+\label{deadcode}
+Una variable, parámetro, campo, método o clase es nunca más usada (usualmente porque se vuelven obsoletos). Esto sucede cuando los requisitos de un software han cambiado o correcciones se han realizado y nadie ha tenido tiempo de limpiar el código antiguo.
+Este código puede también ser encontrado en condicionales complejos, cuando una de las ramas se vuelve inalcanzable (debido a errores u otras circunstancias)
+\subsubsection{Tratamiento}
+
+La manera más rápida de encontrar Código Muerto es utilizando un buen IDE.
+\begin{itemize}
+    \item Elimina código no usado y archivos innecesarios
+    \item En caso de ser una Clase innecesaria, Clase Línea o Colapso de Herencia[\pageref{colapsehierarchy}] pueden ser aplicados si una subclase o superclase es usada.
+    \item Para eliminar parámetros innecesarios, se utilizará Eliminación de Parámetros[\pageref{removeparameter}]
+\end{itemize}
+
+\subsubsection{Beneficios}
+\begin{itemize}
+    \item Se Reduce el tamaño del código
+    \item Soporte más simple
+\end{itemize}
+
+\subsection{Speculative Generality - Generalización Especulativa}
+\label{speculativeGenerality}
+A veces, código es creado "por si acaso" se necesita satisfacer futuras características que nunca llegan a ser implementadas. Como resultado, el código se vuelve difícil de entender y mantener, produciendo clases, métodos, campos o parámetros sin usar.
+\subsubsection{Tratamiento}
+\begin{itemize}
+    \item Para eliminar clases abstractas no utilizadas, probar Colapso de Herencia[\pageref{colapsehierarchy}]
+    \item Innecesarias delegaciones de funcionalidad a otras clases pueden ser eliminadas con Clase Línea
+    \item ¿Métodos no usados? Utilizar Método Linea[\pageref{inlinemethod}] para eliminarlos
+    \item Métodos con parámetros sin usar deben ser observador con la ayuda de Eliminación de Parámetros[\pageref{removeparameter}]
+    \item Campos sin usar pueden ser simplemente eliminados
+\end{itemize}
+\subsubsection{Beneficios}
+\begin{itemize}
+    \item Código más corto
+    \item Fácil de Mantener
+\end{itemize}
+\subsubsection{Cuando Ignorar}
+\begin{itemize}
+    \item Si se trabaja en un framework, es eminentemente razonable el crear funcionalidades no usadas en el framework como tal, mientras esta funcionalidad sea usuada por el framework de otros usuarios
+    \item Antes de eliminar elementos, se debe asegurar que no son utilizadas en test unitarios. Esto sucede si los test necesitan una manera de obtener cierta información interna de una clase o realizar un acción especial de testeo.
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%-----Francisco José----%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1133,6 +1243,10 @@ Replace Inline Code with Function Call
 
 \subsection{Grupo 5}
 Replace Superclass with Delegate
+\label{replaceSuperclassWithDelegate}
+\begin{itemize}
+    \item \textbf{Problema} 
+\end{itemize}
 
 Replace Type Code with Class
 
@@ -1248,35 +1362,37 @@ Split Variable
 \end{itemize}
 
 \chapter{Caso 2: Alejandro Francisco}
+\textbf{Refactorizado por:} Juan Soler Márquez \newline
+
 
 \chapter {Caso 3: Francisco José Martín}
  \textbf{Refactorizado por:} Alejandro Francisco García Uclés \newline
 
-    \hyperref[DeadCode]{\textbf{Dead Code}}
+    \hyperref[deadcode]{\textbf{Dead Code}}
     
     \textbf{Razón:} El constructor de la clase Pueblo que recibe una lista de tramos no se usa nunca.
     
     \lstinputlisting[language = java]{alumno2DeadCode.java}
     
-    \hyperref[LongMethod]{\textbf{Long Method}}
+    \hyperref[longmethod]{\textbf{Long Method}}
     
     \textbf{Razón:} El método contiene más de diez lineas, habiendo algunas que podrían sacarse a otros métodos. Como veremos más adelante.
     
     \lstinputlisting[language = java]{alumno2LongMethod.java}
     
-    \hyperref[RenameVariable]{\textbf{Rename Variable}}
+    \hyperref[renamevariable]{\textbf{Rename Variable}}
     
     \textbf{Razón:} La variable no explica qué se quiere confirmar si es verdadero o falso.
     
     \lstinputlisting[language = java]{alumno2RenameVariable.java}
     
-    \hyperref[RenameField]{\textbf{Rename Field}}
+    \hyperref[renamefield]{\textbf{Rename Field}}
     
     \textbf{Razón:} El nombre del método, aunque bastante indicativo de lo que hace, podría serlo más.
     
     \lstinputlisting[language = java]{alumno2RenameField.java}
     
-    \hyperref[ExtractMethod]{\textbf{Extract Method}}
+    \hyperref[extractmethod]{\textbf{Extract Method}}
     
     \textbf{Razón:} Del método MCD antes comentado en \textbf{LongMethod}, este condicional que da valor a una variable podría extraerse para un nuevo método.
     
@@ -1300,11 +1416,6 @@ Split Variable
 
 \chapter {Caso 6: Marius Cosmin Magurean}
 % refactorizado por: Adalid Abraham Villanueva Hermoza
-
-
-\chapter {Caso 9: Antonio}
-\textbf{Refactoriza:} Marius Cosmin
-
 
 \chapter {Caso 7: Jose Antonio Parra Sánchez}
 \textbf{Refactoriza:} Antonio Miguel
@@ -1387,4 +1498,16 @@ Archivo \textbf{Main.java}:
     \item \textbf{Crear objetos}: Crear objetos para almacenar y ofrecer los resultados, haciendo más fácil administrar los campos.
 \end{itemize}
 
+
+
+\chapter {Caso 9: Antonio}
+\textbf{Refactoriza:} Marius Cosmin Magurean\\
+
+El Archivo \textbf{main.go} es donde se inicializán todos los valores y está el metodo main.
+El cual tiene demasiadas lineas por tanto se debe analizar como un
+\textbf{Método Largo (\ref{metodolargo})}.
+\lstinputlisting[language = java]{caso9main.java}
+
+
 \end{document}
+
