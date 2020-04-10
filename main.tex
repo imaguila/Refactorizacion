@@ -1365,11 +1365,31 @@ Split Variable
 \textbf{Refactorizado por:} Juan Soler Márquez \newline
 
     \hyperref[longmethod]{\textbf{Long Method}}
+      \newline
+
      \textbf{Razón:} El método es demasiado largo, realizando funciones distintas que podrían extraerse a métodos más pequeños.
-    
- \lstinputlisting[language = java]{case2AnalizarArchivoMethod.java}    
- 
- 
+    \newline
+ \lstinputlisting[language = java]{case2AnalizarArchivoMethod.java}      \newline
+
+ \hyperref[extractmethod]{\textbf{Extract Method}}
+\newline
+  \textbf{Razón:} Tiene métodos que no tienen nada que ver con la clase main, podrían extraerse a una subclase.
+  \newline
+
+  \lstinputlisting[language = java]{Case2Main.java} 
+  
+\newline
+
+   \hyperref[replaceNestedConditionalWithGuardClauses]{\textbf{\textbf{Reemplazar condicionales anidados con clausulas de guardia}}}
+   \newline
+
+   \textbf{Razón:} Tiene demasiados condicionales anidados y es difícil determinar el flujo normal de ejecución del código. Solución aislar todas las verificaciones especiales y casos extremos en cláusulas separadas y colocarlas antes de las verificaciones principales. Idealmente, debe tener una lista "plana"de condicionales, uno tras otro.
+   
+   
+
+   \newline
+
+  \lstinputlisting[language = java]{Case2Main.java} 
 
 \chapter {Caso 3: Francisco José Martín}
  \textbf{Refactorizado por:} Alejandro Francisco García Uclés \newline
