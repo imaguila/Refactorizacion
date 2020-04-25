@@ -1242,25 +1242,75 @@ Replace Inline Code with Function Call
 
 
 \subsection{Grupo 5}
-Replace Superclass with Delegate
+\textbf{Replace Superclass with Delegate}
 \label{replaceSuperclassWithDelegate}
 \begin{itemize}
-    \item \textbf{Problema} 
+    \item \textbf{Problema} Una clase hereda de una superclase solo para poder usar los métodos que este último contiene.
+    \lstinputlisting[language = java]{replaceSuperclassWithDelegateProblem.java}
+    
+    \item \textbf{Solución} Se elimina la herencia y la clase crea una variable que será un objeto de la antigua superclase, que será la que llamará los métodos que se desean emplear
+    \lstinputlisting[language = java]{replaceSuperclassWithDelegateSolution.java}
 \end{itemize}
 
-Replace Type Code with Class
+\textbf{Replace Type Code with Class}
+\label{replaceSuperclassWithDelegate}
+\begin{itemize}
+    \item \textbf{Problema} Una clase se encarga de crear distintos tipos de objetos que convienen que pueden que tengan caracteristicas únicas.
+    \lstinputlisting[languaje = java]{replaceTypeCodeWithSubclassesProblem.java}
+    
+    \item \textbf{Solución} Se crean subclases que serán llamados según el tipo de objeto que se quiera crear.
+    \lstinputlisting[language = java]{replaceTypeCodeWithSubclassesSolution.java}
+\end{itemize}
 
-Return Modified Value
+\textbf{Return Modified Value}
+\label{returnModifiedValue}
+\begin{itemize}
+    \item \textbf{Problema} Un método trabaja sobre una variable para almacenar los resultados parciales y finales del cálculo realizado, que puede provocar errores si otros métodos acceden a la misma variable.
+    \lstinputlisting[languaje = javascript]{returnModifiedValueProblem.java}
+    
+    \item \textbf{Solución} Se utiliza una constante cuyo valor será igual al resultado que devuelva el método asociado a esa contante
+    \lstinputlisting[languaje = javascript]{returnModifiedValueSolution.java}
+\end{itemize}
 
-Slide Statements
+\textbf{Slide Statements}
+\label{slideStatements}
+\begin{itemize}
+    \item \textbf{Problema} El programa funciona correctamente pero la legibilidad del código es confusa debido al arreglo de las lineas 
+    \lstinputlisting[languaje = javascript]{slideStatementsProblem.js}
+    
+    \item \textbf{Solución} Se reordenan las líneas del código sin perjudicar el funcionamiento del programa de manera que se entienda mejor el funcionamiento del programa
+    \lstinputlisting[languaje = javascript]{slideStatementsSolution.js}
+\end{itemize}
 
-Split Loop
+\textbf{Split Loop}
+\label{splitLoop}
+\begin{itemize}
+    \item \textbf{Problema} Un bloque de iteración del programa trabaja con dos o más variables a la vez, impidiendo que se pueda trabajar con uno solo en determinadas ocasiones.
+    \lstinputlisting[languaje = javascript]{splitLoopProblem.js}
+    
+    \item \textbf{Solución} Dividir la iteración en iteraciones más cortas dedicas a un calculo en concreto sobre una variable concreta.
+    \lstinputlisting[languaje = javascript]{splitLoopSolution.js}
+\end{itemize}
 
-Split Phase
+\textbf{Split Phase}
+\label{splitPhase}
+\begin{itemize}
+    \item \textbf{Problema} Se crean variables como tantas funciones utilicemos para guardar los resultados parciales del proceso hasta llegar a un resultado final deseado, generando poca legibilidad en el código y posibles errores 
+    \lstinputlisting[languaje = javascript]{splitPhaseProblem.js}
+    
+    \item \textbf{Solución} Se crean métodos, cuyos resultados se almacenarán en variables, dando como resultado una mejor legibilidad de lo que hace el código y reducción de variables globales utilizadas
+    \lstinputlisting[languaje = javascript]{splitPhaseSolution.js}
+\end{itemize}
 
-Split Variable
-
-
+\textbf{Split Variable}
+\label{splitVariable}
+\begin{itemize}
+    \item \textbf{Problema} Se utiliza una misma variable para almacenar los resultados de un cálculo y cuyos resultados son convenientes de almacenarlos para futuros cálculos necesarios 
+    \lstinputlisting[laguaje = javascript]{splitVariableProblem.js}
+    
+    \item \textbf{Solución} Se crean constantes que almacenarán los resultados significativos o importantes
+    \lstinputlisting[laguaje = javascript]{splitVariableSolution.js}
+\end{itemize}
 
 \chapter*{Correspondencia entre refactorizaciones}
 
@@ -1364,6 +1414,8 @@ Split Variable
 \chapter{Caso 2: Alejandro Francisco}
 \textbf{Refactorizado por:} Juan Soler Márquez \newline
 
+\textbf{ Resumen: } En general el código está bastante limpio, comentado y fácil de entender, si bien algunos métodos son algo largos y se podrían extraer sub-métodos para hacer su comprensión más liviana. 
+
     \hyperref[longmethod]{\textbf{Long Method}}
       \newline
 
@@ -1389,7 +1441,7 @@ Split Variable
 
    \newline
 
-  \lstinputlisting[language = java]{Case2Main.java} 
+  \lstinputlisting[language = java]{case2CalcularSalida.java} 
 
 \chapter {Caso 3: Francisco José Martín}
  \textbf{Refactorizado por:} Alejandro Francisco García Uclés \newline
@@ -1430,11 +1482,7 @@ Split Variable
 \chapter {Caso 4: Francisco Jesús García López}
 \textbf{Refactorizador:} Francisco José Martín
 
-
-
-
-
-
+    
 
 \chapter {Caso 5: Adalid Abraham Villanueva Hermoza}
 \textbf{Refactoriza:} Fco Jesus Garcia López
