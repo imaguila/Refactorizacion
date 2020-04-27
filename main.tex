@@ -262,13 +262,38 @@ Suelen surgir por una estructura pobre o por la programación copiar-pegar.
 \end{itemize}
 
 \subsection{Cirugía de escopeta}
-Hacer algun cambio requiere hacer muchos cambios en muchas clases diferentes.
+Hacer algún cambio requiere hacer muchos cambios en muchas clases diferentes.
 \newline
 Suele surgir cuando una funcionalidad se ha repartido entre varias clases. Puede ocurrir después de aplicar la solución para los Cambios divergentes.
 
+\textbf{Soluciones}
+\begin{itemize}
+    \item Emplear las refactorizaciones de mover método \hyperref[moveMethod]{move method} y mover campo \hyperref[moveField]{move field} para mover las características de una clase existente a otra clase. Si no existiera ninguna clase adecuada, crear una nueva.
+    \item Si al mover el código a una misma clase deja a las clases originales prácticamente vacías, intentar hacerse cargo de estas clases redundantes con la refactorización de clase en línea \hyperref[inlineClass]{inline class}
+\end{itemize} 
+
+\textbf{Ventajas}
+\begin{itemize}
+    \item Mejora la organización del código.
+    \item Reduce la duplicación del código.
+    \item Mantenimiento más sencillo
+\end{itemize}
 
 \subsection{Jerarquía de herencias paralelas}
+Siempre que se crea una subclase para una clase, te encuentras con que tienes que crear otra subclase para otra clase.
+\newline
+Todo esta bien cuando la jerarquía de clases es pequeña, pero añadir nuevas clases dificulta hacer cambios.
 
+\textbf{Soluciones}
+\begin{itemize}
+    \item Se debe desduplicar las jerarquías de clases paralelas en dos pasos. Primero, hacer instancias de una jerarquía referenciando a la otra jerarquía. Después, eliminar la jerarquía en la clase referenciada, empleando mover método \hyperref[moveMethod]{move method} y mover campo \hyperref[moveField]{move field}
+\end{itemize} 
+
+\textbf{Ventajas}
+\begin{itemize}
+    \item Mejora la organización del código.
+    \item Reduce la duplicación del código.
+\end{itemize}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -571,13 +596,15 @@ Las técnicas de refactorización en este grupo simplifican los métodos, elimin
 Estas técnicas de refactorización nos muestran como mover funcionalidad entre clases. crear nuevas clases y ocultar los detalles de implementación al acceso público de manera segura.
 
 
-\subsection{Mover Métodos - Move Method}  
+\subsection{Mover Métodos - Move Method} 
+\label{moveMethod}
 \begin{itemize}
     \item \textbf{Problema} Un método es más utilizado en otra clase que en la suya propia.
     \item \textbf{Solución} Crear un método en la clase donde el método se utiliza más, mover el código del método anterior al que hemos creado. Transformar el código del método original en una referencia al nuevo método de la otra clase o podemos eliminarlo por completo.
 \end{itemize}
     
 \subsection{Mover Campos - Move Field}
+\label{moveField}
 \begin{itemize}
     \item \textbf{Problema} Un campo es más utilizado en otra clase que en la suya propia.
     \item \textbf{Solución} Crear un campo en una nueva clase y redirigir a todos los usuarios del campo anterior a este.
@@ -590,6 +617,7 @@ Estas técnicas de refactorización nos muestran como mover funcionalidad entre 
 \end{itemize}
     
 \subsection{Clase en Línea - Inline Class}
+\label{inlineClass}
 \begin{itemize}
     \item \textbf{Problema} Un método apenas tiene funcionalidad no es responsable de nada y no se plantea agregarle nada nuevo.
     \item \textbf{Solución} Mover todas las características a otra clase.
@@ -943,7 +971,7 @@ Estas técnicas hacen que las llamadas a métodos sean más simples y fáciles d
 \begin{itemize}
     \item \textbf{Problema} Otras clases no usan un método o solo se usan dentro de su propia jerarquía de clases.
     \item \textbf{Solución} Haz el método privado o protegido.
-\end{itemize}
+\end{itemize} 
 
 \subsection{Reemplazar constructor con método factory - Replace Constructor with Factory Method}
 \label{replaceconstructorwithfactorymethod}
@@ -1155,19 +1183,65 @@ Move Statements to Callers
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%-Francisco Jesús-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Grupo 3}
-Replace Constructor with Factory Method
+\textbf{Replace Constructor with Factory Method}
+\label{replacerConstructorWithFactoryMethod}
+\begin{itemize}
+    \item \textbf{Problema}: Tienes un constructor complejo que hacer más cosas además de solo establecer los valores a los atributos del objeto.
+    \lstinputlisting[language = java]{replaceConstructorWithFactoryMethodProblem.java}
+    \item \textbf{Solución}: Crear un método de fábrica y usarlo en vez de las llamadas al constructor.
+    \lstinputlisting[language = java]{replaceConstructorWithFactoryMethodSolution.java}
+\end{itemize}
 
-Replace Control Flag with Break
+\textbf{Replace Control Flag with Break}
+\label{replaceControlFlagWithBreak}
+\begin{itemize}
+    \item \textbf{Problema}: Empleamos una variable booleana cuando queremos que un for no siga iterando.
+    \lstinputlisting[language = java]{replaceControlFlagWithBreakProblem.java}
+    \item \textbf{Solución}: Usar un break en vez de la variable booleana
+    \lstinputlisting[language = java]{replaceControlFlagWithBreakSolution.java}
+\end{itemize}
 
-Replace Derived Variable with Query
+\textbf{Replace Derived Variable with Query}
+\label{replaceDerivedVariableWithQuery}
+\begin{itemize}
+    \item \textbf{Problema}: Usamos una variable auxiliar para realizar una operación.
+    \lstinputlisting[language = java]{replaceDerivedVariableWithQueryProblem.java}
+    \item \textbf{Solución}: Emplezar una consulta
+    \lstinputlisting[language = java]{replaceDerivedVariableWithQuerySolution.java}
+\end{itemize}
 
-Replace Exception with Precheck
+\textbf{Replace Exception with Precheck}
+\label{replaceExceptionWithPrecheck}
+\begin{itemize}
+    \item \textbf{Problema}: Usamos una excepción.
+    \lstinputlisting[language = java]{replaceExceptionWithPrecheckProblem.java}
+    \item \textbf{Solución}: Emplezar una condición en vez de una excepción.
+    \lstinputlisting[language = java]{replaceExceptionWithPrecheckSolution.java}
+\end{itemize}
 
-Replace Function with Command
+\textbf{Replace Function with Command}
+\label{replaceFunctionWithCommand}
+\begin{itemize}
+    \item \textbf{Problema}: Empleamos una función larga.
+    \lstinputlisting[language = java]{replaceFunctionWithCommandProblem.java}
+    \item \textbf{Solución}: Emplear una clase para realizar la función completa en varias partes.
+    \lstinputlisting[language = java]{replaceFunctionWithCommandSolution.java}
+\end{itemize}
 
-Replace Inline Code with Function Call
+\textbf{Replace Inline Code with Function Call}
+\label{replaceInlineCodeWithFunctionCall}
+\begin{itemize}
+    \item \textbf{Problema}: Codificamos algo que ya hace una función existente.
+    \lstinputlisting[language = java]{replaceInlineCodeWithFunctionCallProblem.java}
+    \item \textbf{Solución}: Empleamos una función existente en vez de codificarla.
+    \lstinputlisting[language = java]{replaceInlineCodeWithFunctionCallSolution.java}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \subsection{Grupo 4}
 \textbf{Replace Loop with Pipeline}
@@ -1480,16 +1554,77 @@ Replace Inline Code with Function Call
 
 
 \chapter {Caso 4: Francisco Jesús García López}
-\textbf{Refactorizador:} Francisco José Martín
+\textbf{Refactorizador:} Francisco José Martín \newline
 
+    \hyperref[longmethod]{\textbf{Long Method}}
     
+    \textbf{Razón:} El método contine más de diez lineas, pudiendo sacarse fragmentos del método en otros métodos.
+    
+    \lstinputlisting[language = java]{alumno3LongMethod.java}
+    \newline
+    
+    \hyperref[longmethod]{\textbf{Long Method}}
+    
+    \textbf{Razón:} El método contine más de diez lineas, pudiendo sacarse fragmentos del método en otros métodos.
+    
+    \lstinputlisting[language = java]{alumno3LongMethod2.java}
+    \newline
+    
+    \hyperref[renamefield]{\textbf{RenameField}}
+    
+    \textbf{Razón:} El nombre del método no es muy explicado, podría serlo más.
+    
+    \lstinputlisting[language = java]{alumno3RenameField.java}
+    \newline
+    
+    \hyperref[extractmethod]{\textbf{ExtractMethod}}
+    
+    \textbf{Razón:} Del método algoritmo comentado anteriormente en el primer LongMethod, este es el fragmento de código que podríamos extraer para hacer el método algoritmo más liviano.
+    
+    \lstinputlisting[language = java]{alumno3ExtractMethod.java}
+    \newline
 
 \chapter {Caso 5: Adalid Abraham Villanueva Hermoza}
-\textbf{Refactoriza:} Fco Jesus Garcia López
-
+    \textbf{Refactoriza:} Fco Jesus Garcia López
+    
+    \hyperref[longmethod]{\textbf{Long Method}}
+    \newline
+    \textbf{Razón}: El método main es demasiado largo, podría dividirse en varios métodos.
+    \lstinputlisting[language = java]{alumno5LongMethod.java}
+    
+    \hyperref[deadcode]{\textbf{Dead Code}}
+    \newline
+    \textbf{Razón}: El constructor de la clase Caravana está vacío.
+    \lstinputlisting[language = java]{alumno5DeadCode.java}
+    
+    \hyperref[extractmethod]{\textbf{Extract Method}}
+    \newline
+    \textbf{Razón}: Las operaciones de entrada/salida del Scanner podrían extrarse en otros métodos, para hacer el main más limpio.
+    \lstinputlisting[language = java]{alumno5scanner.java}
+    
+    \hyperref[replaceExceptionWithPrecheck]{\textbf{Replace Exception With Precheck}}
+    \newline
+    \textbf{Razón}: No emplear excepciones sino condiciones.
+    \lstinputlisting[language = java]{alumno5excepciones.java}
 
 \chapter {Caso 6: Marius Cosmin Magurean}
-% refactorizado por: Adalid Abraham Villanueva Hermoza
+
+\textbf{Refactoriza: } Adalid Abraham Villanueva Hermoza
+    \newline
+    
+    \textbf{Propuestas: } En este caso nos encontramos un programa corto en python. Se controlan bien los datos a ingresar y los caso de error. Utiliza variables temporales y el cálculo se realiza sobre le mismo main. Lo que se puede hacer en este caso es aplicar refactorización \textbf{Extract Method}
+    \newline
+
+\hyperref[extractmethod]{\textbf{Extract Method}}
+    \newline
+    \textbf{Razón: } El cálculo se puede realizar con un método que devuelva el número de burros utilizados en un caso, y el resultado sea directamente añadido (append) al array ''resultados'', quitando la variable ''parejas'' del main y que esta se encuentre dentro del ámbito del método nuevo 
+    \lstinputlisting[language = py]{alumno6ExtractMethod.py}
+    
+    \newline
+    \textbf{Razón: } Podemos también realizar otro Extract Method, donde la salida sea un string producto de un método cuya entrada sea el array ''resultados''. El método contendría la iteración final del programa.
+    \lstinputlisting[language = py]{alumno6ExtractMethod2.py}
+
+
 
 \chapter {Caso 7: Jose Antonio Parra Sánchez}
 \textbf{Refactoriza:} Antonio Miguel
